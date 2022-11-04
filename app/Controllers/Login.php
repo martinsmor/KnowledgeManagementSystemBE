@@ -24,11 +24,16 @@ class Login extends ResourceController
         ];
         if($this->validate($rules)) $this->fail($this->validator->getErrors());
         $model = new UserModel();
+
+        $error = [  "message" => "Invalid credentials.",
+                    "success"=> false
+                ];
+
         $user = $model->where("username",$this->request->getVar("username"))->first();
-        if(!$user) return $this->failNotFound("Username tidak ditemukan");
+        if(!$user) return $this->respond($error);
         
         $verify = password_verify($this->request->getVar('password'),$user['password']);
-        if(!$verify) return $this->fail('Kata sandi yang Anda Masukkan salah');
+        if(!$verify) return $this->respond($error);
 
         $key = getenv('TOKEN_SECRET');
         $payload = array(
