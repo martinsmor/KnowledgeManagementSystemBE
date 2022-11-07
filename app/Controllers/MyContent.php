@@ -4,9 +4,9 @@ namespace App\Controllers;
 
 use CodeIgniter\RESTful\ResourceController;
 use App\Models\ContentModel;
-use App\Models\KategoriModel;
 use App\Models\UserModel;
 use App\Models\TagsModel;
+use App\Models\MediaModel;
 use CodeIgniter\HTTP\Response;
 
 class MyContent extends ResourceController
@@ -67,18 +67,12 @@ class MyContent extends ResourceController
             'isi_konten'  => $this->request->getVar('isi_konten'),
             'liked'  => 0,
             'type'  => $this->request->getVar('type'),
+            'kategori' => $this->request->getVar('kategori'),
             'status'  => "Menunggu"
         ];
         $content->insert($data);
         
         $contentId = $content->getInsertID();
-
-        $kategori = new KategoriModel();
-        $data_kat = [
-            'contentId' => $contentId,
-            'kategori' => $this->request->getVar('kategori')
-        ];
-        $kategori->insert($data_kat);
         
         $tags = new TagsModel();
         $data_tags = [
@@ -87,6 +81,12 @@ class MyContent extends ResourceController
         ];
         $tags->insert($data_tags);
 
+        $media = new MediaModel();
+        $data_media = [
+            'contentId' => $contentId,
+            'medialink' => $this->request->getVar('medialink')
+        ];
+        $media->insert($data_media);
         $response = [
             'status'   => 201,
             'error'    => null,
@@ -103,9 +103,16 @@ class MyContent extends ResourceController
      *
      * @return mixed
      */
-    public function edit($id = null)
+    public function edit($contentId = null)
     {
-        //
+        $response = [
+            'status'   => 200,
+            'error'    => null,
+            'messages' => [
+                'success' => 'Konten Berhasil Diubah.'
+            ]
+        ];
+        return $this->respond($response);
     }
 
     /**
@@ -123,8 +130,22 @@ class MyContent extends ResourceController
      *
      * @return mixed
      */
-    public function delete($id = null)
+    public function delete($contentId = null)
     {
-        //
+        $model = new ContentModel();
+        $data = $model->where('contentId', $this->request->getVar("contentId"))->delete($contentId);
+        if ($data) {
+            $model->delete($contentId);
+            $response = [
+                'status'   => 200,
+                'error'    => null,
+                'messages' => [
+                    'success' => 'Data produk berhasil dihapus.'
+                ]
+            ];
+            return $this->respondDeleted($response);
+        } else {
+            return $this->failNotFound('Data tidak ditemukan.');
+        }
     }
 }

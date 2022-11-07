@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 02, 2022 at 05:41 PM
+-- Generation Time: Nov 07, 2022 at 07:22 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.5
 
@@ -50,6 +50,7 @@ CREATE TABLE `content` (
   `isi_konten` longtext NOT NULL,
   `liked` int(11) NOT NULL,
   `type` varchar(50) NOT NULL,
+  `kategori` varchar(50) NOT NULL,
   `status` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -57,12 +58,14 @@ CREATE TABLE `content` (
 -- Dumping data for table `content`
 --
 
-INSERT INTO `content` (`contentId`, `username`, `tanggal`, `judul`, `isi_konten`, `liked`, `type`, `status`) VALUES
-(1, 'user3', '2022-11-10', 'Pedoman Survey untuk Inflasi', 'Inflasi:\r\n\r\nInflasi adalah kecenderungan naiknya harga barang dan jasa pada umumnya yang berlangsung secara terus menerus. Jika harga barang dan jasa di dalam negeri meningkat, maka inflasi mengalami kenaikan. Naiknya harga barang dan jasa tersebut menyebabkan turunnya nilai uang. Dengan demikian, inflasi dapat juga diartikan sebagai penurunan nilai uang terhadap nilai barang dan jasa secara umum.\r\n\r\nIndeks Harga konsumen (IHK):\r\n\r\nIndeks yang menghitung rata-rata perubahan harga dari suatu paket barang dan jasa yang dikonsumsi oleh rumah tangga dalam kurun waktu tertentu. IHK merupakan indikator yang digunakan untuk mengukur tingkat inflasi. Perubahan IHK dari waktu ke waktu menggambarkan tingkat kenaikan (inflasi) atau tingkat penurunan (deflasi) dari barang dan jasa.\r\n\r\nAndil Inflasi:\r\n\r\nAndil Inflasi adalah besarnya sumbangan setiap komoditas yang mengalami fluktuasi harga terhadap inflasi atau deflasi yang terjadi di suatu kota atau secara nasional. Besarnya nilai perubahan indeks (inflasi/deflasi) yang terjadi setiap bulan, merupakan gabungan andil dari jenis barang/jasa yang mengalami fluktuasi harga pada bulan yang bersangkutan.', 0, 'Artikel', 'Menunggu'),
-(2, 'user5', '2022-11-13', 'Apakah bertani itu boleh?', 'Bertani itu boleh asalkan jangan ganja', 0, 'Pertanyaan', 'Disetujui'),
-(3, 'user3', '2022-11-06', 'Tata Cara Pernikahan Hewan', 'Menurut dr Roslan Yusni Hasan, spesialis bedah saraf, manusia tidak mungkin bisa menghamili binatang. \"Kalau manusia yang bersetubuh dengan binatang memang banyak, tetapi tidak mungkin bisa hamil karena genusnya berbeda,\" kata dokter yang akrab disapa dr Ryu ini saat dihubungi Kompas.com, Senin (21/12/2015)', 2, 'Video', 'Ditolak'),
-(4, 'user6', '2022-11-06', 'Lagu Apuse Mempengaruhi Peradaban', 'Apuse kokon dao Yarabe soren doreri Wuf lenso bani nema baki pase Apuse kokon dao Yarabe soren doreri Wuf lenso bani nema baki pase Arafabye aswarakwar Arafabye aswarakwar\r\n\r\nArtikel ini telah tayang di www.inews.id dengan judul \" Lirik Lagu Apuse Beserta Notnya, Arti dan Asal Daerahnya \", Klik untuk baca: https://www.inews.id/news/nasional/lirik-lagu-apuse-beserta-notnya-arti-dan-asal-daerahnya.\r\n\r\n\r\nDownload aplikasi Inews.id untuk akses berita lebih mudah dan cepat:\r\nhttps://www.inews.id/apps', 0, 'Audio', 'Menunggu'),
-(5, 'user5', '2022-11-01', 'Koruptor', 'Korupsi adalah semua yang memiliki keterkaitan terhadap tindakan yang diancam dengan sanksi sebagaimana diatur didalam Undang-undang No. 31 Tahun 1999 Tentang Pemberantasan Tindak Pidana Korupsi dan Undang-undang No. 20 Tahun 2001 tentang pengubahan Atas UU No. 31 Tahun 1999 tentang Pemberantasan Tindak Pidana Korupsi[1][2]. Dan Peraturan Mahkamah Agung Nomor 1 tahun 2020[3].\r\n\r\nRasuah atau mencuri (bahasa Latin: corruptio dari kata kerja corrumpere yang bermakna busuk, haram, menggoyahkan, memutarbalik, menyogok, mencuri, maling) ialah tindakan pejabat publik, baik politisi maupun pegawai negeri sipil, serta pihak lain yang terlibat dalam tindakan itu yang secara tidak wajar dan tidak legal menyalahgunakan kepercayaan publik dan masyarakat yang dikuasakan kepada mereka untuk mendapatkan keuntungan sepihak.[4]', 0, 'Artikel', 'Disetujui');
+INSERT INTO `content` (`contentId`, `username`, `tanggal`, `judul`, `isi_konten`, `liked`, `type`, `kategori`, `status`) VALUES
+(1, 'user3', '2022-11-10', 'Pedoman Survey untuk Inflasi', 'Inflasi:\r\n\r\nInflasi adalah kecenderungan naiknya harga barang dan jasa pada umumnya yang berlangsung secara terus menerus. Jika harga barang dan jasa di dalam negeri meningkat, maka inflasi mengalami kenaikan. Naiknya harga barang dan jasa tersebut menyebabkan turunnya nilai uang. Dengan demikian, inflasi dapat juga diartikan sebagai penurunan nilai uang terhadap nilai barang dan jasa secara umum.\r\n\r\nIndeks Harga konsumen (IHK):\r\n\r\nIndeks yang menghitung rata-rata perubahan harga dari suatu paket barang dan jasa yang dikonsumsi oleh rumah tangga dalam kurun waktu tertentu. IHK merupakan indikator yang digunakan untuk mengukur tingkat inflasi. Perubahan IHK dari waktu ke waktu menggambarkan tingkat kenaikan (inflasi) atau tingkat penurunan (deflasi) dari barang dan jasa.\r\n\r\nAndil Inflasi:\r\n\r\nAndil Inflasi adalah besarnya sumbangan setiap komoditas yang mengalami fluktuasi harga terhadap inflasi atau deflasi yang terjadi di suatu kota atau secara nasional. Besarnya nilai perubahan indeks (inflasi/deflasi) yang terjadi setiap bulan, merupakan gabungan andil dari jenis barang/jasa yang mengalami fluktuasi harga pada bulan yang bersangkutan.', 0, 'Artikel', 'Pertanian', 'Menunggu'),
+(2, 'user5', '2022-11-13', 'Apakah bertani itu boleh?', 'Bertani itu boleh asalkan jangan ganja', 0, 'Pertanyaan', 'Ekonomi', 'Disetujui'),
+(3, 'user3', '2022-11-06', 'Tata Cara Pernikahan Hewan', 'Menurut dr Roslan Yusni Hasan, spesialis bedah saraf, manusia tidak mungkin bisa menghamili binatang. \"Kalau manusia yang bersetubuh dengan binatang memang banyak, tetapi tidak mungkin bisa hamil karena genusnya berbeda,\" kata dokter yang akrab disapa dr Ryu ini saat dihubungi Kompas.com, Senin (21/12/2015)', 2, 'Video', 'Pendidikan', 'Ditolak'),
+(4, 'user6', '2022-11-06', 'Lagu Apuse Mempengaruhi Peradaban', 'Apuse kokon dao Yarabe soren doreri Wuf lenso bani nema baki pase Apuse kokon dao Yarabe soren doreri Wuf lenso bani nema baki pase Arafabye aswarakwar Arafabye aswarakwar\r\n\r\nArtikel ini telah tayang di www.inews.id dengan judul \" Lirik Lagu Apuse Beserta Notnya, Arti dan Asal Daerahnya \", Klik untuk baca: https://www.inews.id/news/nasional/lirik-lagu-apuse-beserta-notnya-arti-dan-asal-daerahnya.\r\n\r\n\r\nDownload aplikasi Inews.id untuk akses berita lebih mudah dan cepat:\r\nhttps://www.inews.id/apps', 0, 'Audio', 'Sosial', 'Menunggu'),
+(5, 'user5', '2022-11-01', 'Koruptor', 'Korupsi adalah semua yang memiliki keterkaitan terhadap tindakan yang diancam dengan sanksi sebagaimana diatur didalam Undang-undang No. 31 Tahun 1999 Tentang Pemberantasan Tindak Pidana Korupsi dan Undang-undang No. 20 Tahun 2001 tentang pengubahan Atas UU No. 31 Tahun 1999 tentang Pemberantasan Tindak Pidana Korupsi[1][2]. Dan Peraturan Mahkamah Agung Nomor 1 tahun 2020[3].\r\n\r\nRasuah atau mencuri (bahasa Latin: corruptio dari kata kerja corrumpere yang bermakna busuk, haram, menggoyahkan, memutarbalik, menyogok, mencuri, maling) ialah tindakan pejabat publik, baik politisi maupun pegawai negeri sipil, serta pihak lain yang terlibat dalam tindakan itu yang secara tidak wajar dan tidak legal menyalahgunakan kepercayaan publik dan masyarakat yang dikuasakan kepada mereka untuk mendapatkan keuntungan sepihak.[4]', 0, 'Artikel', 'Inflasi', 'Disetujui'),
+(7, 'user3', '2022-11-02', 'Penurunan Kemiskinan', 'qwertyuiopasdfghjklzxcvbnm', 0, 'Artikel', 'Demografi', 'Menunggu'),
+(9, 'user3', '2022-11-02', 'Penurunan Kemiskinan', 'qwertyuiopasdfghjklzxcvbnm', 0, 'Artikel', 'Kependudukan', 'Menunggu');
 
 -- --------------------------------------------------------
 
@@ -85,36 +88,6 @@ INSERT INTO `c_type` (`id`, `type`) VALUES
 (3, 'Foto'),
 (2, 'Pertanyaan'),
 (4, 'Video');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `kategori`
---
-
-CREATE TABLE `kategori` (
-  `id` int(11) NOT NULL,
-  `contentId` int(10) NOT NULL,
-  `kategori` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `kategori`
---
-
-INSERT INTO `kategori` (`id`, `contentId`, `kategori`) VALUES
-(1, 1, 'Pertanian'),
-(2, 3, 'Sosial'),
-(3, 1, 'Pendidikan'),
-(4, 4, 'Ekonomi'),
-(5, 3, 'Kependudukan'),
-(6, 5, 'Pertanian'),
-(7, 2, 'Kependudukan'),
-(8, 5, 'Inflasi'),
-(9, 2, 'Pertanian'),
-(10, 3, 'Pertanian'),
-(11, 5, 'Pertanian'),
-(12, 1, 'Pendidikan');
 
 -- --------------------------------------------------------
 
@@ -216,7 +189,8 @@ INSERT INTO `tag` (`id`, `contentId`, `tag`) VALUES
 (6, 4, 'MelawanKoruptor'),
 (7, 1, 'AyoBergerak'),
 (8, 2, 'KerjaKerjaKerja'),
-(9, 3, 'PantangMenyerah');
+(9, 3, 'PantangMenyerah'),
+(10, 9, 'BerusahaSukses');
 
 -- --------------------------------------------------------
 
@@ -281,7 +255,8 @@ ALTER TABLE `comment`
 --
 ALTER TABLE `content`
   ADD PRIMARY KEY (`contentId`),
-  ADD KEY `type` (`type`);
+  ADD KEY `type` (`type`),
+  ADD KEY `kategori` (`kategori`);
 
 --
 -- Indexes for table `c_type`
@@ -289,14 +264,6 @@ ALTER TABLE `content`
 ALTER TABLE `c_type`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `type` (`type`);
-
---
--- Indexes for table `kategori`
---
-ALTER TABLE `kategori`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `kat` (`kategori`),
-  ADD KEY `cont_kat` (`contentId`);
 
 --
 -- Indexes for table `kategori_list`
@@ -361,19 +328,13 @@ ALTER TABLE `comment`
 -- AUTO_INCREMENT for table `content`
 --
 ALTER TABLE `content`
-  MODIFY `contentId` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `contentId` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `c_type`
 --
 ALTER TABLE `c_type`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `kategori`
---
-ALTER TABLE `kategori`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `kategori_list`
@@ -403,7 +364,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `tag`
 --
 ALTER TABLE `tag`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `unit_kerja`
@@ -419,14 +380,8 @@ ALTER TABLE `unit_kerja`
 -- Constraints for table `content`
 --
 ALTER TABLE `content`
+  ADD CONSTRAINT `kategori` FOREIGN KEY (`kategori`) REFERENCES `kategori_list` (`nama_kategori`),
   ADD CONSTRAINT `type` FOREIGN KEY (`type`) REFERENCES `c_type` (`type`);
-
---
--- Constraints for table `kategori`
---
-ALTER TABLE `kategori`
-  ADD CONSTRAINT `cont_kat` FOREIGN KEY (`contentId`) REFERENCES `content` (`contentId`),
-  ADD CONSTRAINT `kat` FOREIGN KEY (`kategori`) REFERENCES `kategori_list` (`nama_kategori`);
 
 --
 -- Constraints for table `like`
