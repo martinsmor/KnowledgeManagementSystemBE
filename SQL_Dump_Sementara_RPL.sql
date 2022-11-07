@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 07, 2022 at 07:22 AM
+-- Generation Time: Nov 07, 2022 at 07:40 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.5
 
@@ -64,8 +64,7 @@ INSERT INTO `content` (`contentId`, `username`, `tanggal`, `judul`, `isi_konten`
 (3, 'user3', '2022-11-06', 'Tata Cara Pernikahan Hewan', 'Menurut dr Roslan Yusni Hasan, spesialis bedah saraf, manusia tidak mungkin bisa menghamili binatang. \"Kalau manusia yang bersetubuh dengan binatang memang banyak, tetapi tidak mungkin bisa hamil karena genusnya berbeda,\" kata dokter yang akrab disapa dr Ryu ini saat dihubungi Kompas.com, Senin (21/12/2015)', 2, 'Video', 'Pendidikan', 'Ditolak'),
 (4, 'user6', '2022-11-06', 'Lagu Apuse Mempengaruhi Peradaban', 'Apuse kokon dao Yarabe soren doreri Wuf lenso bani nema baki pase Apuse kokon dao Yarabe soren doreri Wuf lenso bani nema baki pase Arafabye aswarakwar Arafabye aswarakwar\r\n\r\nArtikel ini telah tayang di www.inews.id dengan judul \" Lirik Lagu Apuse Beserta Notnya, Arti dan Asal Daerahnya \", Klik untuk baca: https://www.inews.id/news/nasional/lirik-lagu-apuse-beserta-notnya-arti-dan-asal-daerahnya.\r\n\r\n\r\nDownload aplikasi Inews.id untuk akses berita lebih mudah dan cepat:\r\nhttps://www.inews.id/apps', 0, 'Audio', 'Sosial', 'Menunggu'),
 (5, 'user5', '2022-11-01', 'Koruptor', 'Korupsi adalah semua yang memiliki keterkaitan terhadap tindakan yang diancam dengan sanksi sebagaimana diatur didalam Undang-undang No. 31 Tahun 1999 Tentang Pemberantasan Tindak Pidana Korupsi dan Undang-undang No. 20 Tahun 2001 tentang pengubahan Atas UU No. 31 Tahun 1999 tentang Pemberantasan Tindak Pidana Korupsi[1][2]. Dan Peraturan Mahkamah Agung Nomor 1 tahun 2020[3].\r\n\r\nRasuah atau mencuri (bahasa Latin: corruptio dari kata kerja corrumpere yang bermakna busuk, haram, menggoyahkan, memutarbalik, menyogok, mencuri, maling) ialah tindakan pejabat publik, baik politisi maupun pegawai negeri sipil, serta pihak lain yang terlibat dalam tindakan itu yang secara tidak wajar dan tidak legal menyalahgunakan kepercayaan publik dan masyarakat yang dikuasakan kepada mereka untuk mendapatkan keuntungan sepihak.[4]', 0, 'Artikel', 'Inflasi', 'Disetujui'),
-(7, 'user3', '2022-11-02', 'Penurunan Kemiskinan', 'qwertyuiopasdfghjklzxcvbnm', 0, 'Artikel', 'Demografi', 'Menunggu'),
-(9, 'user3', '2022-11-02', 'Penurunan Kemiskinan', 'qwertyuiopasdfghjklzxcvbnm', 0, 'Artikel', 'Kependudukan', 'Menunggu');
+(7, 'user3', '2022-11-02', 'Penurunan Kemiskinan', 'qwertyuiopasdfghjklzxcvbnm', 0, 'Artikel', 'Demografi', 'Menunggu');
 
 -- --------------------------------------------------------
 
@@ -189,8 +188,7 @@ INSERT INTO `tag` (`id`, `contentId`, `tag`) VALUES
 (6, 4, 'MelawanKoruptor'),
 (7, 1, 'AyoBergerak'),
 (8, 2, 'KerjaKerjaKerja'),
-(9, 3, 'PantangMenyerah'),
-(10, 9, 'BerusahaSukses');
+(9, 3, 'PantangMenyerah');
 
 -- --------------------------------------------------------
 
@@ -399,5 +397,5 @@ ALTER TABLE `media`
 -- Constraints for table `tag`
 --
 ALTER TABLE `tag`
-  ADD CONSTRAINT `content` FOREIGN KEY (`contentId`) REFERENCES `content` (`contentId`);
+  ADD CONSTRAINT `content` FOREIGN KEY (`contentId`) REFERENCES `content` (`contentId`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
