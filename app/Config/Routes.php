@@ -41,6 +41,7 @@ $routes->post('login', 'Login::index');
 $routes->get('decode', 'Decode::index');
 $routes->post('create_content', 'MyContent::create');
 $routes->get('contentbyuser','MyContent::index');
+$routes->get('detail','MyContent::detail');
 $routes->resource('unitkerja');
 $routes->resource('statuschange');
 

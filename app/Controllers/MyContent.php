@@ -33,6 +33,13 @@ class MyContent extends ResourceController
         //
     }
 
+    public function detail()
+    {
+        $model = new ContentModel();
+        $content = $model->where("contentId",$this->request->getVar('contentId'))->first();
+        return $this->respond($content);
+    }
+
     /**
      * Return a new resource object, with default properties
      *
