@@ -105,14 +105,7 @@ class MyContent extends ResourceController
      */
     public function edit($contentId = null)
     {
-        $response = [
-            'status'   => 200,
-            'error'    => null,
-            'messages' => [
-                'success' => 'Konten Berhasil Diubah.'
-            ]
-        ];
-        return $this->respond($response);
+        //
     }
 
     /**
@@ -122,7 +115,41 @@ class MyContent extends ResourceController
      */
     public function update($id = null)
     {
-        //
+        $model = new ContentModel();
+        $json = $this->request->getJSON();
+        if ($json) {
+            $data = [
+                'judul' => $json->judul,
+                'isi_konten' => $json->isi_konten,
+                'type' => $json->type,
+                'like' => 0,
+                'tanggal' => date('Y/m/d'),
+                'status' => 'Menunggu',
+                'kategori' => $json->kategori
+            ];
+        } else {
+            $input = $this->request->getRawInput();
+            $data = [
+                'judul' => $input['judul'],
+                'isi_konten' => $input['isi_konten'],
+                'type' => $input['type'],
+                'like' => 0,
+                'tanggal' => date('Y/m/d'),
+                'status' => "Menunggu",
+                'kategori' => $input['kategori']
+            ];
+        }
+        // Insert to Database
+        $model->update($id, $data);
+        $response = [
+            'status'   => 200,
+            'error'    => null,
+            'messages' => [
+                'success' => 'Konten Berhasil Diubah',
+                'data' => $data
+            ]
+        ];
+        return $this->respond($response);
     }
 
     /**
