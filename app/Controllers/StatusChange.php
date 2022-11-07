@@ -54,46 +54,7 @@ class StatusChange extends ResourceController
      */
     public function edit($contentId = null)
     {
-
-        // $content = new ContentModel();
-        // $data['content'] = $content->where('contentId', $id)->first();
-
-        // $content->update($id, [
-        //     "status" => $this->request->getPost('status')
-        // ]);
-
-        // $response = [
-        //     'status'   => 200,
-        //     'error'    => null,
-        //     'messages' => [
-        //         'success' => 'Status Berhasil Diperbarui.'
-        //     ]
-        // ];
-        // return $this->respond($response);
-
-        $model = new ContentModel();
-        $json = $this->request->getJSON();
-        if ($json) {
-            $data = [
-                'status' => $json->status
-            ];
-        } else {
-            $input = $this->request->getRawInput();
-            $data = [
-                    'status' => $input['status']
-                ];
-        }
-        // Insert to Database
-        $model->update($contentId, $data);
-        $response = [
-            'status'   => 200,
-            'error'    => null,
-            'messages' => [
-                'success' => 'Status Berhasil Diubah.'
-            ]
-        ];
-        return $this->respond($response);
-
+        //
     }
 
     /**
@@ -103,7 +64,28 @@ class StatusChange extends ResourceController
      */
     public function update($id = null)
     {
-        //
+        $model = new ContentModel();
+        $json = $this->request->getJSON();
+        if ($json) {
+            $data = [
+                'status' => $json->status
+            ];
+        } else {
+            $input = $this->request->getRawInput();
+            $data = [
+                'status' => $input['status']
+            ];
+        }
+        // Insert to Database
+        $model->update($id, $data);
+        $response = [
+            'status'   => 200,
+            'error'    => null,
+            'messages' => [
+                'success' => 'Status Berhasil Diubah menjadi ' . $data['status']
+            ]
+        ];
+        return $this->respond($response);
     }
 
     /**

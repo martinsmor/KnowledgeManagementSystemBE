@@ -37,7 +37,7 @@ class Filters extends BaseConfig
       //'csrf',
     ],
        'after'  => [
-        'toolbar',
+        //'toolbar', //deactive toolbar
         //'honeypot'
     ],
 ];
