@@ -7,6 +7,7 @@ use App\Models\ContentModel;
 use App\Models\KategoriModel;
 use App\Models\UserModel;
 use App\Models\TagsModel;
+use CodeIgniter\HTTP\Response;
 
 class MyContent extends ResourceController
 {
@@ -17,7 +18,9 @@ class MyContent extends ResourceController
      */
     public function index()
     {
-        //
+        $model = new ContentModel();
+        $content = $model->where("username",$this->request->getVar('username'))->findAll();
+        return $this->respond($content);
     }
 
     /**
@@ -25,7 +28,7 @@ class MyContent extends ResourceController
      *
      * @return mixed
      */
-    public function show($id = null)
+    public function show($username = null)
     {
         //
     }
@@ -48,6 +51,7 @@ class MyContent extends ResourceController
     public function create()
     {
         $token = $this->request->getVar('token');
+        
         $content = new ContentModel();
         $data = [
             'username' => $this->request->getVar('username'),

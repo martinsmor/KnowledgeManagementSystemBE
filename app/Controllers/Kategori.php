@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use CodeIgniter\RESTful\ResourceController;
 use App\Models\ContentModel;
-use App\Models\KategoriModel;
+use App\Models\KategorilistModel;
 use App\Models\UserModel;
 use App\Models\TagsModel;
 

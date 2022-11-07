@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class KategoriModel extends Model
+class KategorilistModel extends Model
 {
     protected $DBGroup          = 'default';
     protected $table            = 'kategori_list';

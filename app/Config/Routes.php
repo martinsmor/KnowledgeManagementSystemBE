@@ -40,6 +40,7 @@ $routes->post('register', 'Register::index');
 $routes->post('login', 'Login::index');
 $routes->get('decode', 'Decode::index');
 $routes->post('create_content', 'MyContent::create');
+$routes->get('contentbyuser','MyContent::index');
 $routes->resource('unitkerja');
 $routes->resource('statuschange');
 
