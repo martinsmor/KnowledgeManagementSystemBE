@@ -116,6 +116,20 @@ class UnitKerja extends ResourceController
      */
     public function delete($id = null)
     {
-        //
+        $model = new UnitKerjaModel();
+        $data = $model->where('id', $id)->first();
+        if ($data) {
+            $model->delete($id);
+            $response = [
+                'status'   => 200,
+                'error'    => null,
+                'messages' => [
+                    'success' => ' Unit Kerja : ' . $data['unit_kerja'] . ' berhasil dihapus'
+                ]
+            ];
+            return $this->respondDeleted($response);
+        } else {
+            return $this->failNotFound('Data tidak ditemukan.');
+        }
     }
 }
