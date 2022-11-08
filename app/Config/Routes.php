@@ -46,6 +46,7 @@ $routes->put('update','MyContent::edit');
 $routes->resource('mycontent');
 $routes->resource('unitkerja');
 $routes->resource('statuschange');
+$routes->get('beranda', 'Beranda::index');
 
 /*
  * --------------------------------------------------------------------

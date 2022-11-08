@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-
+use App\Models\ContentModel;
 use CodeIgniter\RESTful\ResourceController;
 
 class Beranda extends ResourceController
@@ -14,7 +14,9 @@ class Beranda extends ResourceController
      */
     public function index()
     {
-        //
+        $model = new ContentModel();
+        $content = $model->findAll();
+        return $this->respond($content);
     }
 
     /**
