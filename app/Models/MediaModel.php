@@ -4,17 +4,17 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class KategorilistModel extends Model
+class MediaModel extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'kategori_list';
-    protected $primaryKey       = 'id';
+    protected $table            = 'media';
+    protected $primaryKey       = 'mediaId';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['kategoriId','nama_kategori'];
+    protected $allowedFields    = ['contentId','medialink'];
 
     // Dates
     protected $useTimestamps = false;

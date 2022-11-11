@@ -18,12 +18,11 @@ class Filters extends BaseConfig
      * @var array
      */
     public $aliases = [
-        'csrf'          => CSRF::class,
-        'toolbar'       => DebugToolbar::class,
-        'honeypot'      => Honeypot::class,
-        'invalidchars'  => InvalidChars::class,
-        'secureheaders' => SecureHeaders::class,
-    ];
+  'csrf'     => \CodeIgniter\Filters\CSRF::class,
+  'toolbar'  => \CodeIgniter\Filters\DebugToolbar::class,
+  'honeypot' => \CodeIgniter\Filters\Honeypot::class,
+  'options' => \App\Filters\Options::class,
+];
 
     /**
      * List of filter aliases that are always
@@ -32,17 +31,16 @@ class Filters extends BaseConfig
      * @var array
      */
     public $globals = [
-        'before' => [
-            // 'honeypot',
-            // 'csrf',
-            // 'invalidchars',
-        ],
-        'after' => [
-            // 'toolbar',
-            // 'honeypot',
-            // 'secureheaders',
-        ],
-    ];
+   'before' => [
+      'options' //register option CORS
+      //'honeypot'
+      //'csrf',
+    ],
+       'after'  => [
+        //'toolbar', //deactive toolbar
+        //'honeypot'
+    ],
+];
 
     /**
      * List of filter aliases that works on a

@@ -4,17 +4,17 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class KategorilistModel extends Model
+class UnitKerjaModel extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'kategori_list';
+    protected $table            = 'unit_kerja';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['kategoriId','nama_kategori'];
+    protected $allowedFields    = ['unit_kerja_kode', 'unit_kerja'];
 
     // Dates
     protected $useTimestamps = false;

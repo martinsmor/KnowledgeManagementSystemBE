@@ -38,6 +38,15 @@ $routes->set404Override();
 $routes->get('/', 'Home::index');
 $routes->post('register', 'Register::index');
 $routes->post('login', 'Login::index');
+$routes->get('decode', 'Decode::index');
+$routes->post('create_content', 'MyContent::create');
+$routes->get('contentbyuser','MyContent::index');
+$routes->get('detail','MyContent::detail');
+$routes->put('update','MyContent::edit');
+$routes->resource('mycontent');
+$routes->resource('unitkerja');
+$routes->resource('statuschange');
+$routes->get('beranda', 'Beranda::index');
 
 /*
  * --------------------------------------------------------------------

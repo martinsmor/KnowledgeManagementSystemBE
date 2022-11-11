@@ -6,8 +6,9 @@ use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\UserModel;
 use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
-class Login extends ResourceController
+class Decode extends ResourceController
 {
     /**
      * Return an array of resource objects, themselves in array format
@@ -17,40 +18,23 @@ class Login extends ResourceController
     use ResponseTrait;
     public function index()
     {
-        helper(['form']);
-        $rules = [
-            'username' => 'required',
-            'password' => 'required|min_length[8]',
-        ];
-        if($this->validate($rules)) $this->fail($this->validator->getErrors());
-        $model = new UserModel();
+        $key = getenv("TOKEN_SECRET");
+        $header =$this->request->getServer('HTTP_AUTHORIZATION');
+        if(!$header) return $this->failUnauthorized("Silakan memasukkan token terlebih dahulu");
+        $token = explode(' ',$header)[1];
 
-        $error = [  "message" => "Invalid credentials.",
-                    "success"=> false
-                ];
-
-        $user = $model->where("username",$this->request->getVar("username"))->first();
-        if(!$user) return $this->respond($error);
-        
-        $verify = password_verify($this->request->getVar('password'),$user['password']);
-        if(!$verify) return $this->respond($error);
-
-        $key = getenv('TOKEN_SECRET');
-        $payload = array(
-            "iat" => 1356999524,
-            "nbf" => 1357000000,
-            "username" => $user['username'],
-            "role" => $user['role'],
-            "nama" => $user['nama'],
-            "unit_kerja" => $user['unit_kerja']
-        );
-
-        $token = JWT::encode($payload, $key, 'HS256');
-        $response = [
-            "token" => $token,
-            "role" => $user["role"] 
-        ];
-        return $this->respond($response);
+        try {
+            $decoded = JWT::decode($token, new Key($key,'HS256'));
+            $response = [
+                'username' => $decoded->username,
+                'nama' => $decoded->nama,
+                'role' => $decoded->role,
+                'unit_kerja' => $decoded->unit_kerja
+            ];
+            return $this->respond($response);
+        } catch(\Throwable $th) {
+            return $this->fail('Token Anda salah!');
+        }
     }
 
     /**
