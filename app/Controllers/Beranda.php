@@ -16,7 +16,27 @@ class Beranda extends ResourceController
     public function index()
     {
         $model = new ContentModel();
-        $content = $model->findAll();
+        $filter = $this->request->getVar('filter');
+        $search = $this->request->getVar('search');
+        $sort = $this->request->getVar('sort');
+
+        if($filter && $search && $sort) {
+            $content = $model->where('kategori',$filter)->like('judul',$search,'both')->orderBy($sort,'DESC')->findAll();
+        } elseif($filter && $search) {
+            $content = $model->where('kategori',$filter)->like('judul',$search,'both')->findAll();
+        } elseif($filter && $sort) {
+            $content = $model->where('kategori',$filter)->orderBy($sort,'DESC')->findAll();
+        } elseif ($search && $sort) {
+            $content = $model->like('judul',$search,'both')->orderBy($sort,'DESC')->findAll();
+        } elseif($filter) {
+            $content = $model->where('kategori',$filter)->findAll();
+        } elseif ($search) {
+            $content = $model->like('judul',$search,'both')->findAll();
+        } elseif ($sort) {
+            $content = $model->orderBy($sort,'DESC')->findAll();
+        } else {
+            $content = $model->findAll();
+        }
         return $this->respond($content);
     }
 
@@ -27,7 +47,7 @@ class Beranda extends ResourceController
      */
     public function show($id = null)
     {
-        //
+        
     }
 
     /**
