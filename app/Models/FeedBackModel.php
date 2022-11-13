@@ -4,17 +4,17 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class TagsModel extends Model
+class FeedBackModel extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'tag';
+    protected $table            = 'feedback';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['contentId','tag'];
+    protected $allowedFields    = ['contentId','feedback','from'];
 
     // Dates
     protected $useTimestamps = false;

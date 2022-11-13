@@ -2,11 +2,11 @@
 
 namespace App\Controllers;
 
-use App\Models\ContentModel;
 use CodeIgniter\RESTful\ResourceController;
-use App\Models\UserModel;
+use App\Models\CommentModel;
+use PhpParser\Comment;
 
-class Beranda extends ResourceController
+class Comments extends ResourceController
 {
     /**
      * Return an array of resource objects, themselves in array format
@@ -15,9 +15,7 @@ class Beranda extends ResourceController
      */
     public function index()
     {
-        $model = new ContentModel();
-        $content = $model->findAll();
-        return $this->respond($content);
+        //
     }
 
     /**
@@ -27,7 +25,9 @@ class Beranda extends ResourceController
      */
     public function show($id = null)
     {
-        //
+        $model = new CommentModel();
+        $data = $model->orderBy('tanggal', 'ASC')->findAll();
+        return $this->respond($data);
     }
 
     /**
@@ -45,9 +45,24 @@ class Beranda extends ResourceController
      *
      * @return mixed
      */
-    public function create()
+    public function create($id=null)
     {
-        //
+        $model = new CommentModel();
+        $data = [
+            'contentId' => $id,
+            'username'  => $this->request->getVar('username'),
+            'isi_comment' => $this->request->getVar('comment'),
+            'tanggal'  => date('Y/m/d')
+        ];
+        $model->insert($data);
+        $response = [
+            'status'   => 201,
+            'error'    => null,
+            'messages' => [
+                'success' => 'Komentar berhasil ditambahkan.'
+            ]
+        ];
+        return $this->respondCreated($response);
     }
 
     /**

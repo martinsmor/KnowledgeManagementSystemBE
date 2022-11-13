@@ -3,9 +3,9 @@
 namespace App\Controllers;
 
 use CodeIgniter\RESTful\ResourceController;
-use App\Models\KategoriListModel;
+use App\Models\UserModel;
 
-class Kategori extends ResourceController
+class User extends ResourceController
 {
     /**
      * Return an array of resource objects, themselves in array format
@@ -15,8 +15,8 @@ class Kategori extends ResourceController
     public function index()
     {
         $user = new UserModel();
-        $data['nama'] = $user->orderBy('username', 'ASC')->findAll();
-        return $this->respond($data);//
+        $data = $user->orderBy('username', 'ASC')->findAll();
+        return $this->respond($data);
     }
 
     /**
@@ -24,9 +24,11 @@ class Kategori extends ResourceController
      *
      * @return mixed
      */
-    public function show($id = null)
+    public function show($username = null)
     {
-        //
+        $user = new UserModel();
+        $data = $user->where('username',$username)->first();
+        return $this->respond($data);
     }
 
     /**
@@ -54,5 +56,34 @@ class Kategori extends ResourceController
      *
      * @return mixed
      */
+    public function update($username=null)
+    {
+        $model = new UserModel();
+        $json = $this->request->getJSON();
+        if ($json) {
+            $data = [
+                'role' => $json->role
+            ];
+        } else {
+            $input = $this->request->getRawInput();
+            $data = [
+                'role' => $input['role']
+            ];
+        }
+        // Insert to Database
+        $role = $model->where('username',$username)->first();
+        $model->update($username, $data);
+        $response = [
+            'status'   => 200,
+            'error'    => null,
+            'messages' => [
+                'username' => $username,
+                'from' => $role['role'],
+                'to' => $data['role'],
+                'success' => 'Role Berhasil Diubah.'
+            ]
+        ];
+        return $this->respond($response);
+    }
     
 }

@@ -15,9 +15,8 @@ class UnitKerja extends ResourceController
     public function index()
     {
         $model = new UnitKerjaModel();
-        $data['unit_kerja'] = $model->orderBy('id', 'ASC')->findAll();
+        $data = $model->orderBy('id', 'ASC')->findAll();
         return $this->respond($data);
-
     }
 
     /**

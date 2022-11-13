@@ -4,8 +4,9 @@ namespace App\Controllers;
 
 use CodeIgniter\RESTful\ResourceController;
 use App\Models\ContentModel;
+use App\Models\FeedBackModel;
 
-class StatusChange extends ResourceController
+class Approval extends ResourceController
 {
     /**
      * Return an array of resource objects, themselves in array format
@@ -42,9 +43,29 @@ class StatusChange extends ResourceController
      *
      * @return mixed
      */
-    public function create()
+    public function create($id=null)
     {
-        //
+        $contentmodel = new ContentModel();
+        $content = $contentmodel->where('contentId',$id)->first();
+        if(!$content) return $this->failNotFound('Konten tidak ditemukan.');
+        
+        $model = new FeedbackModel();
+        $data = [
+            'contentId' => $id,
+            'feedback'  => $this->request->getVar('feedback'),
+            'from' => $this->request->getVar('from')
+        ];
+        $model->insert($data);
+        $response = [
+            'status'   => 201,
+            'error'    => null,
+            'messages' => [
+                'success' => 'Feedback berhasil ditambahkan.',
+                'from' => $data['from'],
+                'to' => $data['contentId']
+            ]
+        ];
+        return $this->respondCreated($response);
     }
 
     /**
@@ -82,6 +103,7 @@ class StatusChange extends ResourceController
             'status'   => 200,
             'error'    => null,
             'messages' => [
+                'contentId' => $id,
                 'success' => 'Status Berhasil Diubah menjadi ' . $data['status']
             ]
         ];

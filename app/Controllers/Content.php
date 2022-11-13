@@ -4,12 +4,8 @@ namespace App\Controllers;
 
 use CodeIgniter\RESTful\ResourceController;
 use App\Models\ContentModel;
-use App\Models\UserModel;
-use App\Models\TagsModel;
-use App\Models\MediaModel;
-use CodeIgniter\HTTP\Response;
 
-class MyContent extends ResourceController
+class Content extends ResourceController
 {
     /**
      * Return an array of resource objects, themselves in array format
@@ -18,9 +14,7 @@ class MyContent extends ResourceController
      */
     public function index()
     {
-        $model = new ContentModel();
-        $content = $model->where("username",$this->request->getVar('username'))->findAll();
-        return $this->respond($content);
+        
     }
 
     /**
@@ -30,13 +24,15 @@ class MyContent extends ResourceController
      */
     public function show($username = null)
     {
-        //
+        $model = new ContentModel();
+        $content = $model->where("username",$username)->findAll();
+        return $this->respond($content);
     }
 
-    public function detail()
+    public function view($id = null)
     {
         $model = new ContentModel();
-        $content = $model->where("contentId",$this->request->getVar('contentId'))->first();
+        $content = $model->where("contentId",$id)->first();
         return $this->respond($content);
     }
 
@@ -65,37 +61,24 @@ class MyContent extends ResourceController
             'tanggal'  => date('Y/m/d'),
             'judul'  => $this->request->getVar('judul'),
             'isi_konten'  => $this->request->getVar('isi_konten'),
+            'thumbnail' => $this->request->getVar('thumbnail'),
             'liked'  => 0,
-            'type'  => $this->request->getVar('type'),
             'kategori' => $this->request->getVar('kategori'),
-            'status'  => "Menunggu"
+            'tags' => $this->request->getVar('tags'),
+            'status'  => "Pending"
         ];
         $content->insert($data);
-        
-        $contentId = $content->getInsertID();
-        
-        $tags = new TagsModel();
-        $data_tags = [
-            'contentId' => $contentId,
-            'tag' => $this->request->getVar('tag')
-        ];
-        $tags->insert($data_tags);
-
-        $media = new MediaModel();
-        $data_media = [
-            'contentId' => $contentId,
-            'medialink' => $this->request->getVar('medialink')
-        ];
-        $media->insert($data_media);
         $response = [
             'status'   => 201,
             'error'    => null,
             'messages' => [
+                'user' => $data["username"],
+                'contentId' => $content->getInsertID(),
                 'success' => 'Konten berhasil ditambahkan.'
             ]
         ];
 
-        return $this->respondCreated();
+        return $this->respondCreated($response);
     }
 
     /**
@@ -121,22 +104,22 @@ class MyContent extends ResourceController
             $data = [
                 'judul' => $json->judul,
                 'isi_konten' => $json->isi_konten,
-                'type' => $json->type,
-                'like' => 0,
+                'thumbnail' => $json->thumbnail,
                 'tanggal' => date('Y/m/d'),
-                'status' => 'Menunggu',
-                'kategori' => $json->kategori
+                'status' => 'Pending',
+                'kategori' => $json->kategori,
+                'tags' => $json->tags
             ];
         } else {
             $input = $this->request->getRawInput();
             $data = [
                 'judul' => $input['judul'],
                 'isi_konten' => $input['isi_konten'],
-                'type' => $input['type'],
-                'like' => 0,
+                'thumbnail' => $input['thumbnail'],
                 'tanggal' => date('Y/m/d'),
-                'status' => "Menunggu",
-                'kategori' => $input['kategori']
+                'status' => "Pending",
+                'kategori' => $input['kategori'],
+                'tags' => $input['tags']
             ];
         }
         // Insert to Database
@@ -146,6 +129,7 @@ class MyContent extends ResourceController
             'error'    => null,
             'messages' => [
                 'success' => 'Konten Berhasil Diubah',
+                'id' => $id,
                 'data' => $data
             ]
         ];
@@ -160,19 +144,19 @@ class MyContent extends ResourceController
     public function delete($contentId = null)
     {
         $model = new ContentModel();
-        $data = $model->where('contentId', $this->request->getVar("contentId"))->delete($contentId);
+        $data = $model->where('contentId', $contentId)->first();
         if ($data) {
             $model->delete($contentId);
             $response = [
                 'status'   => 200,
-                'error'    => null,
                 'messages' => [
-                    'success' => 'Data produk berhasil dihapus.'
+                    'contentId' => $contentId,
+                    'success' => 'Konten berhasil dihapus.'
                 ]
             ];
             return $this->respondDeleted($response);
         } else {
-            return $this->failNotFound('Data tidak ditemukan.');
+            return $this->failNotFound('Konten tidak ditemukan.');
         }
     }
 }

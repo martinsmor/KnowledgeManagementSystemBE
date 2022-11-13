@@ -4,17 +4,17 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class MediaModel extends Model
+class CommentModel extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'media';
-    protected $primaryKey       = 'mediaId';
+    protected $table            = 'comment';
+    protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['contentId','medialink'];
+    protected $allowedFields    = ['contentId','username','isi_comment'];
 
     // Dates
     protected $useTimestamps = false;

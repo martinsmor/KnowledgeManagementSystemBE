@@ -37,15 +37,31 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 $routes->post('register', 'Register::index');
-$routes->post('login', 'Login::index');
-$routes->get('decode', 'Decode::index');
-$routes->post('create_content', 'MyContent::create');
-$routes->get('contentbyuser','MyContent::index');
-$routes->get('detail','MyContent::detail');
-$routes->put('update','MyContent::edit');
-$routes->resource('mycontent');
-$routes->resource('unitkerja');
-$routes->resource('statuschange');
+$routes->get('api/auth', 'Login::index');
+
+$routes->post('api/content','Content::create');
+$routes->get('api/content/(.*)','Content::show/$1');
+$routes->put('api/content/(.*)', 'Content::update/$1');
+$routes->delete('api/content/(.*)', 'Content::delete/$1');
+
+$routes->put('api/approval/(.*)','Approval::update/$1');
+$routes->post('api/approval/(.*)','Approval::create/$1');
+
+$routes->put('api/user/(.*)','User::update/$1');
+
+$routes->post('api/category','Kategori::create');
+$routes->get('api/category','Kategori::index');
+$routes->delete('api/category/(.*)','Kategori::delete/$1');
+$routes->put('api/category/(.*)','Kategori::update/$1');
+
+$routes->get('api/unitkerja','UnitKerja::index');
+
+$routes->get('api/view/(.*)','Content::view/$1');
+$routes->get('api/comment/(.*)','Comments::show/$1');
+$routes->post('api/comment/(.*)','Comments::create/$1');
+
+$routes->get('api/user/(.*)','User::show/$1');
+
 $routes->get('beranda', 'Beranda::index');
 
 /*

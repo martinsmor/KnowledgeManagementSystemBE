@@ -4,11 +4,11 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class KategorilistModel extends Model
+class KategoriListModel extends Model
 {
     protected $DBGroup          = 'default';
     protected $table            = 'kategori_list';
-    protected $primaryKey       = 'id';
+    protected $primaryKey       = 'kategoriId';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
     protected $returnType       = 'array';

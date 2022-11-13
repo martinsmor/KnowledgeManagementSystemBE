@@ -3,13 +3,8 @@
 namespace App\Controllers;
 
 use CodeIgniter\RESTful\ResourceController;
-<<<<<<< HEAD
-=======
-use App\Models\ContentModel;
 use App\Models\KategorilistModel;
-use App\Models\UserModel;
-use App\Models\TagsModel;
->>>>>>> 3f29fbba26460caee14a1be9bebdaa5cda422c62
+
 
 class Kategori extends ResourceController
 {
@@ -21,8 +16,8 @@ class Kategori extends ResourceController
     public function index()
     {
         $model = new KategoriListModel();
-        $data['nama_kategori'] = $model->orderBy('kategoriId', 'ASC')->findAll();
-        return $this->respond($data);//
+        $kategori = $model->orderBy('kategoriId','ASC')->findAll();
+        return $this->respond($kategori);
     }
 
     /**
@@ -52,22 +47,23 @@ class Kategori extends ResourceController
      */
     public function create()
     {
-        $token = $this->request->getVar('token');
-        $kategorilist = new KategorilistModel();
+        $kategori = new KategoriListModel();
         $data = [
-            'nama_kategori' => $this->request->getVar('nama_kategori')
-            'kategoriId'=> $this->request->getVar('kategoriId')
+            'nama_kategori' => $this->request->getVar('name'),
         ];
-        $kategorilist->insert($data);
+        $kategori->insert($data);
+        $id = $kategori->getInsertID();
         $response = [
             'status'   => 201,
             'error'    => null,
             'messages' => [
+                'name' => $data['nama_kategori'],
+                'id' => $id,
                 'success' => 'Kategori berhasil ditambahkan.'
             ]
         ];
 
-        return $this->respondCreated();
+        return $this->respondCreated($response);
     }
 
     /**
@@ -87,30 +83,31 @@ class Kategori extends ResourceController
      */
     public function update($id = null)
     {
-        $kategorilist = new KategoriListModel();
+        $model = new KategoriListModel();
         $json = $this->request->getJSON();
         if ($json) {
             $data = [
-                'kategoriId' => $json->kategoriId,
-                'nama_kategori'  => $json->nama_kategori
+                'nama_kategori'  => $json->name
             ];
         } else {
             $input = $this->request->getRawInput();
             $data = [
-                'kategoriId' => $input['kategoriId'],
-                'nama_kategori'  => $input['nama_kategori']
+                'nama_kategori'  => $input['name']
             ];
         }
         // Insert to Database
+        $name = $model->where('kategoriId',$id)->first();
         $model->update($id, $data);
         $response = [
             'status'   => 200,
             'error'    => null,
             'messages' => [
+                'from' => $name['nama_kategori'],
+                'to' => $data['nama_kategori'],
                 'success' => 'Kategori Berhasil Diubah.'
             ]
         ];
-        return $this->respond($response);//
+        return $this->respond($response);
     }
 
     /**
@@ -120,20 +117,21 @@ class Kategori extends ResourceController
      */
     public function delete($id = null)
     {
-        $kategorilist = new KategoriListModel();
-        $data = $kategorilist->where('kategoriId', $id)->first();
+        $model = new KategoriListModel();
+        $data = $model->where('kategoriId', $id)->first();
         if ($data) {
-            $kategorilist->delete($id);
+            $model->delete($id);
             $response = [
                 'status'   => 200,
                 'error'    => null,
                 'messages' => [
-                    'success' => ' Kategori : ' . $data['nama_kategori'] . ' berhasil dihapus'
+                    'success' => ' Kategori : ' . $data['nama_kategori'] . ' berhasil dihapus',
+                    'id' => $id
                 ]
             ];
             return $this->respondDeleted($response);
         } else {
             return $this->failNotFound('Data tidak ditemukan.');
-        } //
+        }
     }
 }
