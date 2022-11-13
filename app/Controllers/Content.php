@@ -54,14 +54,25 @@ class Content extends ResourceController
     public function create()
     {
         $token = $this->request->getVar('token');
+        // change thumbnail from base64 to image
+        $thumbnail = $this->request->getVar('thumbnail');
+        $thumbnail = str_replace('data:image/png;base64,', '', $thumbnail);
+        $thumbnail = str_replace(' ', '+', $thumbnail);
+        $thumbnail = base64_decode($thumbnail);
+        $thumbnailName = uniqid().'.png';
+        $thumbnailPath = WRITEPATH.'uploads/'.$thumbnailName;
+        file_put_contents($thumbnailPath, $thumbnail);
+
+
         
         $content = new ContentModel();
         $data = [
             'username' => $this->request->getVar('username'),
+            'contentId' => uniqid(),
             'tanggal'  => date('Y/m/d'),
             'judul'  => $this->request->getVar('judul'),
             'isi_konten'  => $this->request->getVar('isi_konten'),
-            'thumbnail' => $this->request->getVar('thumbnail'),
+            'thumbnail' => $thumbnailName,
             'liked'  => 0,
             'kategori' => $this->request->getVar('kategori'),
             'tags' => $this->request->getVar('tags'),
