@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 13, 2022 at 12:39 PM
+-- Generation Time: Nov 13, 2022 at 03:08 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.5
 
@@ -23,7 +23,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `comment` (
   `id` int(11) NOT NULL,
-  `contentId` int(10) NOT NULL,
+  `contentId` varchar(100) NOT NULL,
   `username` varchar(100) NOT NULL,
   `isi_comment` varchar(1000) NOT NULL,
   `tanggal` date NOT NULL
@@ -34,10 +34,10 @@ CREATE TABLE `comment` (
 --
 
 INSERT INTO `comment` (`id`, `contentId`, `username`, `isi_comment`, `tanggal`) VALUES
-(1, 2, 'user1', 'Waduh sia sia dong panen ganja 1 ton', '2022-11-16'),
-(2, 1, 'user4', 'Kamu nanya?', '0000-00-00'),
-(3, 1, 'user4', 'Kamu nanya?', '0000-00-00'),
-(4, 5, 'user4', 'Kamu nanya?', '0000-00-00');
+(1, '2', 'user1', 'Waduh sia sia dong panen ganja 1 ton', '2022-11-16'),
+(2, '1', 'user4', 'Kamu nanya?', '0000-00-00'),
+(3, '1', 'user4', 'Kamu nanya?', '0000-00-00'),
+(4, '5', 'user4', 'Kamu nanya?', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -46,7 +46,7 @@ INSERT INTO `comment` (`id`, `contentId`, `username`, `isi_comment`, `tanggal`) 
 --
 
 CREATE TABLE `content` (
-  `contentId` int(10) NOT NULL,
+  `contentId` varchar(100) NOT NULL,
   `username` varchar(100) NOT NULL,
   `tanggal` date NOT NULL,
   `judul` varchar(50) NOT NULL,
@@ -63,15 +63,15 @@ CREATE TABLE `content` (
 --
 
 INSERT INTO `content` (`contentId`, `username`, `tanggal`, `judul`, `isi_konten`, `thumbnail`, `liked`, `kategori`, `tags`, `status`) VALUES
-(1, 'user3', '2022-11-13', 'Content Error', 'Kesalahan yang disebabkan oleh jawaban responden maupun kesalahan pencatatan oleh petugas. Pengukuran dilakukan dengan mengukur perbedaan isian yang tercantum pada dokumen hasil pencacahan GB SE dengan UC PES.', 'https://dmm0a91a1r04e.cloudfront.net/i3O7AswS3pMet', 0, 'Ekonomi', 'Survei Pencacahan 2022', 'Pending'),
-(2, 'user5', '2022-11-13', 'Pernikahan ini', 'testestes', NULL, 0, 'Kependudukan', '', 'Menunggu'),
-(3, 'user3', '2022-11-13', 'Pernikahan ini', 'ahhahahahaha', NULL, 2, 'Kependudukan', '', 'Menunggu'),
-(4, 'user6', '2022-11-13', 'Pernikahan ini', 'testestes', NULL, 0, 'Kependudukan', '', 'Approved'),
-(5, 'user5', '2022-11-13', 'Pernikahan ini', 'testestes', NULL, 0, 'Kependudukan', '', 'Menunggu'),
-(7, 'user3', '2022-11-13', 'Pernikahan ini', 'testestes', NULL, 0, 'Kependudukan', '', 'Menunggu'),
-(10, 'user1', '2022-11-13', 'Pernikahan Not Found', 'ahhahahahaha', 'https://upload.wikimedia.org/wikipedia/commons/3/3', 0, 'Kependudukan', 'SP2020 Rudi', 'Pending'),
-(15, 'user2', '2022-11-13', 'Pernikahan Not Found', 'ahhahahahaha', 'https://upload.wikimedia.org/wikipedia/commons/3/3', 0, 'Kependudukan', 'SP2020 Rudi', 'Pending'),
-(16, 'user2', '2022-11-13', 'Pernikahan Not Found', 'ahhahahahaha', 'https://upload.wikimedia.org/wikipedia/commons/3/3', 0, 'Kependudukan', 'SP2020 Rudi', 'Pending');
+('1', 'user3', '2022-11-13', 'Content Error', 'Kesalahan yang disebabkan oleh jawaban responden maupun kesalahan pencatatan oleh petugas. Pengukuran dilakukan dengan mengukur perbedaan isian yang tercantum pada dokumen hasil pencacahan GB SE dengan UC PES.', 'https://dmm0a91a1r04e.cloudfront.net/i3O7AswS3pMet', 0, 'Ekonomi', 'Survei Pencacahan 2022', 'Pending'),
+('10', 'user1', '2022-11-13', 'Pernikahan Not Found', 'ahhahahahaha', 'https://upload.wikimedia.org/wikipedia/commons/3/3', 0, 'Kependudukan', 'SP2020 Rudi', 'Pending'),
+('15', 'user2', '2022-11-13', 'Pernikahan Not Found', 'ahhahahahaha', 'https://upload.wikimedia.org/wikipedia/commons/3/3', 0, 'Kependudukan', 'SP2020 Rudi', 'Pending'),
+('16', 'user2', '2022-11-13', 'Pernikahan Not Found', 'ahhahahahaha', 'https://upload.wikimedia.org/wikipedia/commons/3/3', 0, 'Kependudukan', 'SP2020 Rudi', 'Pending'),
+('2', 'user5', '2022-11-13', 'Pernikahan ini', 'testestes', NULL, 0, 'Kependudukan', '', 'Menunggu'),
+('3', 'user3', '2022-11-13', 'Pernikahan ini', 'ahhahahahaha', NULL, 2, 'Kependudukan', '', 'Menunggu'),
+('4', 'user6', '2022-11-13', 'Pernikahan ini', 'testestes', NULL, 0, 'Kependudukan', '', 'Approved'),
+('5', 'user5', '2022-11-13', 'Pernikahan ini', 'testestes', NULL, 0, 'Kependudukan', '', 'Menunggu'),
+('7', 'user3', '2022-11-13', 'Pernikahan ini', 'testestes', NULL, 0, 'Kependudukan', '', 'Menunggu');
 
 -- --------------------------------------------------------
 
@@ -81,7 +81,7 @@ INSERT INTO `content` (`contentId`, `username`, `tanggal`, `judul`, `isi_konten`
 
 CREATE TABLE `feedback` (
   `id` int(11) NOT NULL,
-  `contentId` int(50) NOT NULL,
+  `contentId` varchar(100) NOT NULL,
   `feedback` text NOT NULL,
   `from` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -91,7 +91,7 @@ CREATE TABLE `feedback` (
 --
 
 INSERT INTO `feedback` (`id`, `contentId`, `feedback`, `from`) VALUES
-(1, 1, 'Kontennya busuk', 'user4');
+(1, '1', 'Kontennya busuk', 'user4');
 
 -- --------------------------------------------------------
 
@@ -126,7 +126,7 @@ INSERT INTO `kategori_list` (`kategoriId`, `nama_kategori`) VALUES
 
 CREATE TABLE `like` (
   `id` int(11) NOT NULL,
-  `contentId` int(10) NOT NULL,
+  `contentId` varchar(100) NOT NULL,
   `username` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -135,7 +135,7 @@ CREATE TABLE `like` (
 --
 
 INSERT INTO `like` (`id`, `contentId`, `username`) VALUES
-(1, 1, 'user1');
+(1, '1', 'user1');
 
 -- --------------------------------------------------------
 
@@ -275,12 +275,6 @@ ALTER TABLE `comment`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `content`
---
-ALTER TABLE `content`
-  MODIFY `contentId` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
-
---
 -- AUTO_INCREMENT for table `feedback`
 --
 ALTER TABLE `feedback`
@@ -309,20 +303,4 @@ ALTER TABLE `role`
 --
 ALTER TABLE `unit_kerja`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `content`
---
-ALTER TABLE `content`
-  ADD CONSTRAINT `kategori` FOREIGN KEY (`kategori`) REFERENCES `kategori_list` (`nama_kategori`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `like`
---
-ALTER TABLE `like`
-  ADD CONSTRAINT `cont_like` FOREIGN KEY (`contentId`) REFERENCES `content` (`contentId`);
 COMMIT;

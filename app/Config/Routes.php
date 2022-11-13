@@ -39,6 +39,8 @@ $routes->get('/', 'Home::index');
 $routes->post('register', 'Register::index');
 $routes->get('api/auth', 'Login::index');
 
+$routes->get('api/beranda','Beranda::index');
+
 $routes->post('api/content','Content::create');
 $routes->get('api/content/(.*)','Content::show/$1');
 $routes->put('api/content/(.*)', 'Content::update/$1');
@@ -61,8 +63,6 @@ $routes->get('api/comment/(.*)','Comments::show/$1');
 $routes->post('api/comment/(.*)','Comments::create/$1');
 
 $routes->get('api/user/(.*)','User::show/$1');
-
-$routes->get('beranda', 'Beranda::index');
 
 /*
  * --------------------------------------------------------------------
