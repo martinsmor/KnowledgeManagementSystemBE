@@ -5,6 +5,7 @@ namespace App\Controllers;
 use CodeIgniter\RESTful\ResourceController;
 use App\Models\ContentModel;
 use App\Models\FeedBackModel;
+use App\Models\UserModel;
 
 class Approval extends ResourceController
 {
@@ -23,9 +24,17 @@ class Approval extends ResourceController
      *
      * @return mixed
      */
-    public function show($id = null)
+    public function show($username = null)
     {
-        //
+        $model = new UserModel();
+        $approval = $model->where('username',$username)->first();
+        if($approval['role'] != 'Approval') return $this->respond("This user isn't Approval");
+
+        $user = $model->where('unit_kerja',$approval['unit_kerja'])->findAll();
+
+        $contentModel = new ContentModel();
+        $content = $contentModel->findAll();
+        return $this->respond($content[0]['user']);
     }
 
     /**

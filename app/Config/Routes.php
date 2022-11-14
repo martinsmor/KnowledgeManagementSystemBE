@@ -51,6 +51,7 @@ $routes->post('api/approval/(.*)','Approval::create/$1');
 
 $routes->put('api/user/(.*)','User::update/$1');
 $routes->get('api/user','User::index');
+$routes->get('api/user/role','User::getRole');
 
 $routes->post('api/category','Kategori::create');
 $routes->get('api/category','Kategori::index');

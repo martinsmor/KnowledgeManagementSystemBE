@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use CodeIgniter\RESTful\ResourceController;
 use App\Models\UserModel;
+use App\Models\RoleModel;
 
 class User extends ResourceController
 {
@@ -29,6 +30,13 @@ class User extends ResourceController
         $user = new UserModel();
         $data = $user->where('username',$username)->first();
         return $this->respond($data);
+    }
+
+    public function getRole()
+    {
+        $model = new RoleModel();
+        $role = $model->findAll();
+        return $this->respond($role);
     }
 
     /**
