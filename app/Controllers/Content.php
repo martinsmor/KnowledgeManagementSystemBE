@@ -53,7 +53,6 @@ class Content extends ResourceController
      */
     public function create()
     {
-        $token = $this->request->getVar('token');
         // change thumbnail from base64 to image
         $thumbnail = $this->request->getVar('thumbnail');
         $thumbnail = str_replace('data:image/png;base64,', '', $thumbnail);

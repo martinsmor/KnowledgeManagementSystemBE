@@ -21,21 +21,21 @@ class Beranda extends ResourceController
         $sort = $this->request->getVar('sort');
 
         if($filter && $search && $sort) {
-            $content = $model->where('kategori',$filter)->like('judul',$search,'both')->orderBy($sort,'DESC')->findAll();
+            $content = $model->where('kategori',$filter)->like('judul',$search,'both')->orderBy($sort,'DESC')->where('status','Approved')->findAll();
         } elseif($filter && $search) {
-            $content = $model->where('kategori',$filter)->like('judul',$search,'both')->findAll();
+            $content = $model->where('kategori',$filter)->like('judul',$search,'both')->where('status','Approved')->findAll();
         } elseif($filter && $sort) {
-            $content = $model->where('kategori',$filter)->orderBy($sort,'DESC')->findAll();
+            $content = $model->where('kategori',$filter)->orderBy($sort,'DESC')->where('status','Approved')->findAll();
         } elseif ($search && $sort) {
-            $content = $model->like('judul',$search,'both')->orderBy($sort,'DESC')->findAll();
+            $content = $model->like('judul',$search,'both')->orderBy($sort,'DESC')->where('status','Approved')->findAll();
         } elseif($filter) {
-            $content = $model->where('kategori',$filter)->findAll();
+            $content = $model->where('kategori',$filter)->where('status','Approved')->findAll();
         } elseif ($search) {
-            $content = $model->like('judul',$search,'both')->findAll();
+            $content = $model->like('judul',$search,'both')->where('status','Approved')->findAll();
         } elseif ($sort) {
-            $content = $model->orderBy($sort,'DESC')->findAll();
+            $content = $model->orderBy($sort,'DESC')->where('status','Approved')->findAll();
         } else {
-            $content = $model->findAll();
+            $content = $model->where('status','Approved')->findAll();
         }
         return $this->respond($content);
     }
