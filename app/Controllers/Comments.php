@@ -26,8 +26,9 @@ class Comments extends ResourceController
     public function show($id = null)
     {
         $model = new CommentModel();
-        $data = $model->orderBy('tanggal', 'ASC')->findAll();
+        $data = $model->orderBy('tanggal', 'ASC')->where('contentId', $id)->findAll();
         return $this->respond($data);
+        
     }
 
     /**
