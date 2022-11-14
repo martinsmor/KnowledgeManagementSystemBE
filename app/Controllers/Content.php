@@ -84,7 +84,7 @@ class Content extends ResourceController
             'error'    => null,
             'messages' => [
                 'user' => $data["username"],
-                'contentId' => $content->getInsertID(),
+                'contentId' => $data['contentId'],
                 'success' => 'Konten berhasil ditambahkan.'
             ]
         ];
