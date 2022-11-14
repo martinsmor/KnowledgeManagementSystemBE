@@ -14,7 +14,8 @@ class Content extends ResourceController
      */
     public function index()
     {
-        
+        $model = new ContentModel();
+        return $this->respond($model->findAll());
     }
 
     /**

@@ -48,6 +48,7 @@ $routes->delete('api/content/(.*)', 'Content::delete/$1');
 
 $routes->put('api/approval/(.*)','Approval::update/$1');
 $routes->post('api/approval/(.*)','Approval::create/$1');
+$routes->get('api/approval/(.*)', 'Approval::show/$1');
 
 $routes->put('api/user/(.*)','User::update/$1');
 $routes->get('api/user','User::index');
@@ -65,6 +66,8 @@ $routes->get('api/comment/(.*)','Comments::show/$1');
 $routes->post('api/comment/(.*)','Comments::create/$1');
 
 $routes->get('api/user/(.*)','User::show/$1');
+
+$routes->get('api/all','Content::index');
 
 /*
  * --------------------------------------------------------------------

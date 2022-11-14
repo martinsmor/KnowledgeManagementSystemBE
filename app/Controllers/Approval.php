@@ -33,8 +33,20 @@ class Approval extends ResourceController
         $user = $model->where('unit_kerja',$approval['unit_kerja'])->findAll();
 
         $contentModel = new ContentModel();
+        
         $content = $contentModel->findAll();
-        return $this->respond($content[0]['user']);
+        $match = [];
+        $k = 0;
+        for ($i=0 ; $i < sizeof($content) ; $i++ ) {
+             for ($j=0; $j < sizeof($user); $j++) { 
+                if($content[$i]['username'] === $user[$j]['username']) {
+                    $match[$k] = $content[$i];
+                    $k++;
+                    break;
+                }
+             }
+        }
+        return $this->respond($match);
     }
 
     /**
