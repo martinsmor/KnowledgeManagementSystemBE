@@ -34,7 +34,7 @@ class Approval extends ResourceController
 
         $contentModel = new ContentModel();
         
-        $content = $contentModel->findAll();
+        $content = $contentModel->where('status','Pending')->findAll();
         $match = [];
         $k = 0;
         for ($i=0 ; $i < sizeof($content) ; $i++ ) {
