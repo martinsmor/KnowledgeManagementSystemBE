@@ -42,7 +42,7 @@ $routes->post('api/auth', 'Login::index');
 $routes->get('api/beranda','Beranda::index');
 
 $routes->post('api/content','Content::create');
-$routes->get('api/content/(.*)','Content::show/$1');
+$routes->get('api/content','Content::show');
 $routes->put('api/content/(.*)', 'Content::update/$1');
 $routes->delete('api/content/(.*)', 'Content::delete/$1');
 

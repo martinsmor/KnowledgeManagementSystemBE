@@ -5,6 +5,7 @@ namespace App\Controllers;
 use CodeIgniter\RESTful\ResourceController;
 use App\Models\ContentModel;
 
+
 class Content extends ResourceController
 {
     /**
@@ -14,6 +15,7 @@ class Content extends ResourceController
      */
     public function index()
     {
+        $pager = \Config\Services::pager();
         $model = new ContentModel();
         return $this->respond($model->findAll());
     }
@@ -25,9 +27,34 @@ class Content extends ResourceController
      */
     public function show($username = null)
     {
+        $sort = $this->request->getVar('sort');
+        $page = $this->request->getVar('page') ? $this->request->getVar('page') : 1;
+        $row = $this->request->getVar('limit') ? $this->request->getVar('limit') : 10;
+        $search = $this->request->getVar('search');
+        $sort = $this->request->getVar('sort');
+        $username = $this->request->getVar('username');
         $model = new ContentModel();
-        $content = $model->where("username",$username)->findAll();
-        return $this->respond($content);
+        // order by config
+
+        if ($sort == 'Terbaru') {
+            $content = $model->like('judul', $search)->where('username', $username)->orderBy("tanggal", 'DESC')->paginate($row, 'content', $page);
+        } else if ($sort == 'Judul') {
+            $content = $model->like('judul', $search)->where('username', $username)->orderBy("judul", 'ASC')->paginate($row, 'content', $page);
+        } else {
+            $content = $model->like('judul', $search)->where('username', $username)->orderBy("tanggal", 'DESC')->paginate($row, 'content', $page);
+        }
+        
+        // ->paginate($row,'content', $page);            
+
+
+        // count total row
+        $total = $model->like('judul', $search)->where('username', $username)->countAllResults();
+        $data = [
+            'content' => $content,
+            'total' => $total,
+            'pager' => $model->pager
+        ];
+        return $this->respond($data);
     }
 
     public function view($id = null)
