@@ -27,6 +27,7 @@ class Content extends ResourceController
      */
     public function show($username = null)
     {
+        $filter = $this->request->getVar('filter');
         $sort = $this->request->getVar('sort');
         $page = $this->request->getVar('page') ? $this->request->getVar('page') : 1;
         $row = $this->request->getVar('limit') ? $this->request->getVar('limit') : 10;
@@ -37,18 +38,18 @@ class Content extends ResourceController
         // order by config
 
         if ($sort == 'Terbaru') {
-            $content = $model->like('judul', $search)->where('username', $username)->orderBy("tanggal", 'DESC')->paginate($row, 'content', $page);
+            $content = $model->like('judul', $search)->where('username', $username)->where('status',$filter)->orderBy("tanggal", 'DESC')->paginate($row, 'content', $page);
         } else if ($sort == 'Judul') {
-            $content = $model->like('judul', $search)->where('username', $username)->orderBy("judul", 'ASC')->paginate($row, 'content', $page);
+            $content = $model->like('judul', $search)->where('username', $username)->where('status',$filter)->orderBy("judul", 'ASC')->paginate($row, 'content', $page);
         } else {
-            $content = $model->like('judul', $search)->where('username', $username)->orderBy("tanggal", 'DESC')->paginate($row, 'content', $page);
+            $content = $model->like('judul', $search)->where('username', $username)->where('status',$filter)->orderBy("tanggal", 'DESC')->paginate($row, 'content', $page);
         }
         
         // ->paginate($row,'content', $page);            
 
 
         // count total row
-        $total = $model->like('judul', $search)->where('username', $username)->countAllResults();
+        $total = $model->like('judul', $search)->where('username', $username)->where('status',$filter)->countAllResults();
         $data = [
             'content' => $content,
             'total' => $total,

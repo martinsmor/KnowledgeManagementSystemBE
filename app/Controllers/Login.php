@@ -49,7 +49,8 @@ class Login extends ResourceController
         $response = [
             "token" => $token,
             "role" => $user["role"],
-            "unit_kerja" => $user["unit_kerja"]
+            "unit_kerja" => $user["unit_kerja"],
+            "username" => $user['username'],
         ];
         return $this->respond($response);
     }
