@@ -15,9 +15,22 @@ class Kategori extends ResourceController
      */
     public function index()
     {
+        $page = $this->request->getVar('page') ? $this->request->getVar('page') : 1;
+        $row = $this->request->getVar('limit') ? $this->request->getVar('limit') : 10;
+        $search = $this->request->getVar('search');
+
         $model = new KategoriListModel();
-        $kategori = $model->orderBy('kategoriId','ASC')->findAll();
-        return $this->respond($kategori);
+        $kategori = $model->like('nama_kategori', $search)->paginate($row, 'default', $page);
+
+        $total = $model->like('nama_kategori', $search)->countAllResults();
+
+        $data = [
+            'kategori' => $kategori,
+            'total' => $total,
+            'pager' => $model->pager
+        ];
+
+        return $this->respond($data);
     }
 
     /**

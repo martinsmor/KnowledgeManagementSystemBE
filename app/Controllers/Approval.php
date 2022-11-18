@@ -16,25 +16,29 @@ class Approval extends ResourceController
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Return the properties of a resource object
-     *
-     * @return mixed
-     */
-    public function show($username = null)
-    {
+        $username = $this->request->getVar('username');
+        $search = $this->request->getVar('search');
         $model = new UserModel();
         $approval = $model->where('username',$username)->first();
+$page = $this->request->getVar('page') ? $this->request->getVar('page') : 1;
+        $row = $this->request->getVar('limit') ? $this->request->getVar('limit') : 10;
+        $sort = $this->request->getVar('sort');
+
         if($approval['role'] != 'Approval') return $this->respond("This user isn't Approval");
 
         $user = $model->where('unit_kerja',$approval['unit_kerja'])->findAll();
 
         $contentModel = new ContentModel();
+
+        if ($sort == 'Terbaru') {
+           $content = $contentModel->where('status','Pending')->orderBy('tanggal', 'DESC')->like('judul', $search)->paginate($row, 'default', $page);
+        } elseif ($sort == 'Judul') {
+            $content = $contentModel->where('status','Pending')->orderBy('judul', 'ASC')->like('judul', $search)->paginate($row, 'default', $page);
+        }
         
-        $content = $contentModel->where('status','Pending')->findAll();
+        // $content = $contentModel->where('status','Pending')->like('judul',$search)->paginate($row, 'default', $page);
+        $total = $contentModel->where('status','Pending')->like('judul',$search)->countAllResults();
+
         $match = [];
         $k = 0;
         for ($i=0 ; $i < sizeof($content) ; $i++ ) {
@@ -46,7 +50,21 @@ class Approval extends ResourceController
                 }
              }
         }
-        return $this->respond($match);
+        $data = [
+            'content' => $match,
+            'total' => $total
+        ];
+        return $this->respond($data);
+    }
+
+    /**
+     * Return the properties of a resource object
+     *
+     * @return mixed
+     */
+    public function show($username = null)
+    {
+        
     }
 
     /**

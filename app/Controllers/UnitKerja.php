@@ -14,9 +14,25 @@ class UnitKerja extends ResourceController
      */
     public function index()
     {
+        $page = $this->request->getVar('page') ? $this->request->getVar('page') : 1;
+        $row = $this->request->getVar('limit') ? $this->request->getVar('limit') : 10;
+        $search = $this->request->getVar('search');
+
         $model = new UnitKerjaModel();
-        $data = $model->orderBy('id', 'ASC')->findAll();
-        return $this->respond($data);
+        if ($search) {
+            $data = $model->like('unit_kerja', $search)->paginate($row, 'default', $page);
+        } else {
+            $data = $model->paginate($row, 'default', $page);
+        }
+        $response = [
+            'status' => 200,
+            'error' => null,
+            'unit_kerja' => $data,
+            'total' => $model->countAllResults(),
+            'pager' => $model->pager
+        ];
+
+        return $this->respond($response);
     }
 
     /**

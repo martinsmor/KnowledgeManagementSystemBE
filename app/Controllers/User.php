@@ -15,8 +15,36 @@ class User extends ResourceController
      */
     public function index()
     {
+        $page = $this->request->getVar('page') ? $this->request->getVar('page') : 1;
+        $row = $this->request->getVar('limit') ? $this->request->getVar('limit') : 10;
+        $search = $this->request->getVar('search');
+        $sort = $this->request->getVar('sort');
+        $filter = $this->request->getVar('filter');
+        $unitkerja = $this->request->getVar('unitkerja');
+        $role = $this->request->getVar('role');
         $user = new UserModel();
-        $data = $user->select(['username','nama','role','unit_kerja'])->orderBy('username', 'ASC')->find();
+
+        if ($unitkerja && $role) {
+           $data = $user->select(['username','nama','role','unit_kerja'])->where('unit_kerja', $unitkerja)->where('role', $role)->orderBy('username', 'ASC')->like('nama', $search)->paginate($row, 'default', $page);
+        } else if ($unitkerja) {
+           $data = $user->select(['username','nama','role','unit_kerja'])->where('unit_kerja', $unitkerja)->orderBy('username', 'ASC')->like('nama', $search)->paginate($row, 'default', $page);
+        } else if ($role) {
+           $data = $user->select(['username','nama','role','unit_kerja'])->where('role', $role)->orderBy('username', 'ASC')->like('nama', $search)->paginate($row, 'default', $page);
+        } else {
+           $data = $user->select(['username','nama','role','unit_kerja'])->orderBy('username', 'ASC')->like('nama', $search)->paginate($row, 'default', $page);
+        }
+
+            
+
+       
+
+
+        $total = $user->like('nama', $search)->countAllResults();
+        $data = [
+            'user' => $data,
+            'total' => $total,
+            'pager' => $user->pager
+        ];
         
         return $this->respond($data);
     }
