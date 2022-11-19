@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 13, 2022 at 03:08 PM
+-- Generation Time: Nov 19, 2022 at 10:26 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.5
 
@@ -63,7 +63,7 @@ CREATE TABLE `content` (
 --
 
 INSERT INTO `content` (`contentId`, `username`, `tanggal`, `judul`, `isi_konten`, `thumbnail`, `liked`, `kategori`, `tags`, `status`) VALUES
-('1', 'user3', '2022-11-13', 'Content Error', 'Kesalahan yang disebabkan oleh jawaban responden maupun kesalahan pencatatan oleh petugas. Pengukuran dilakukan dengan mengukur perbedaan isian yang tercantum pada dokumen hasil pencacahan GB SE dengan UC PES.', 'https://dmm0a91a1r04e.cloudfront.net/i3O7AswS3pMet', 0, 'Ekonomi', 'Survei Pencacahan 2022', 'Pending'),
+('1', 'user3', '2022-11-13', 'Content Error', 'Kesalahan yang disebabkan oleh jawaban responden maupun kesalahan pencatatan oleh petugas. Pengukuran dilakukan dengan mengukur perbedaan isian yang tercantum pada dokumen hasil pencacahan GB SE dengan UC PES.', 'https://dmm0a91a1r04e.cloudfront.net/i3O7AswS3pMet', 0, 'Ekonomi', 'Survei Pencacahan 2022', 'Approved'),
 ('10', 'user1', '2022-11-13', 'Pernikahan Not Found', 'ahhahahahaha', 'https://upload.wikimedia.org/wikipedia/commons/3/3', 0, 'Kependudukan', 'SP2020 Rudi', 'Pending'),
 ('15', 'user2', '2022-11-13', 'Pernikahan Not Found', 'ahhahahahaha', 'https://upload.wikimedia.org/wikipedia/commons/3/3', 0, 'Kependudukan', 'SP2020 Rudi', 'Pending'),
 ('16', 'user2', '2022-11-13', 'Pernikahan Not Found', 'ahhahahahaha', 'https://upload.wikimedia.org/wikipedia/commons/3/3', 0, 'Kependudukan', 'SP2020 Rudi', 'Pending'),
@@ -71,6 +71,9 @@ INSERT INTO `content` (`contentId`, `username`, `tanggal`, `judul`, `isi_konten`
 ('3', 'user3', '2022-11-13', 'Pernikahan ini', 'ahhahahahaha', NULL, 2, 'Kependudukan', '', 'Menunggu'),
 ('4', 'user6', '2022-11-13', 'Pernikahan ini', 'testestes', NULL, 0, 'Kependudukan', '', 'Approved'),
 ('5', 'user5', '2022-11-13', 'Pernikahan ini', 'testestes', NULL, 0, 'Kependudukan', '', 'Menunggu'),
+('637245c106eea', 'user5', '2022-11-14', 'Content Error', 'Kesalahan yang disebabkan oleh jawaban responden maupun kesalahan pencatatan oleh petugas. Pengukuran dilakukan dengan mengukur perbedaan isian yang tercantum pada dokumen hasil pencacahan GB SE dengan UC PES.', '637245c102b4f.png', 0, 'Ekonomi', 'Survei Pencacahan 2022', 'Pending'),
+('637245d08bf37', 'user5', '2022-11-14', 'Content Error', 'Kesalahan yang disebabkan oleh jawaban responden maupun kesalahan pencatatan oleh petugas. Pengukuran dilakukan dengan mengukur perbedaan isian yang tercantum pada dokumen hasil pencacahan GB SE dengan UC PES.', '637245d088497.png', 0, 'Ekonomi', 'Survei Pencacahan 2022', 'Pending'),
+('637246691c9ce', 'user5', '2022-11-14', 'Content Error', 'Kesalahan yang disebabkan oleh jawaban responden maupun kesalahan pencatatan oleh petugas. Pengukuran dilakukan dengan mengukur perbedaan isian yang tercantum pada dokumen hasil pencacahan GB SE dengan UC PES.', '637246691883b.png', 0, 'Ekonomi', 'Survei Pencacahan 2022', 'Pending'),
 ('7', 'user3', '2022-11-13', 'Pernikahan ini', 'testestes', NULL, 0, 'Kependudukan', '', 'Menunggu');
 
 -- --------------------------------------------------------
@@ -91,7 +94,9 @@ CREATE TABLE `feedback` (
 --
 
 INSERT INTO `feedback` (`id`, `contentId`, `feedback`, `from`) VALUES
-(1, '1', 'Kontennya busuk', 'user4');
+(1, '1', 'Kontennya busuk', 'user4'),
+(2, '1', 'Kontennya busuk', 'user2'),
+(3, '1', 'Kontennya busuk', 'user2');
 
 -- --------------------------------------------------------
 
@@ -125,7 +130,7 @@ INSERT INTO `kategori_list` (`kategoriId`, `nama_kategori`) VALUES
 --
 
 CREATE TABLE `like` (
-  `id` int(11) NOT NULL,
+  `id` varchar(100) NOT NULL,
   `contentId` varchar(100) NOT NULL,
   `username` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -135,7 +140,7 @@ CREATE TABLE `like` (
 --
 
 INSERT INTO `like` (`id`, `contentId`, `username`) VALUES
-(1, '1', 'user1');
+('16user5', '16', 'user5');
 
 -- --------------------------------------------------------
 
@@ -201,9 +206,9 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`username`, `password`, `nama`, `role`, `unit_kerja`) VALUES
 ('user1', '$2y$10$WRXO6PXDyXo8ZChh61RqJOB269EReckrYgIcG5odKP2ps7RRKUruW', 'Binog', 'Administrator', 'INSIS'),
 ('user2', '$2y$10$vOuTNHPywPU2Pnns9G6WLOxsKMvXpMZFLflfld27c7L2MDbfk/KvW', 'Nakano Miku', 'Approval', 'METSTAT'),
-('user3', '$2y$10$bV01VA1.riWmxCuVeFvKmOt/Cj3WtTqMz3Y7NzXD2juy/FNsZOzcq', 'Aizen-sama', 'Mitra', 'METSTAT'),
+('user3', '$2y$10$bV01VA1.riWmxCuVeFvKmOt/Cj3WtTqMz3Y7NzXD2juy/FNsZOzcq', 'Aizen-sama', 'Content Creator', 'METSTAT'),
 ('user4', '$2y$10$irZ87tbdZuUyNMQEyGv8CemzDfbhMB1FcNlP2pwZad1ij2JshOPAG', 'Gojo Satoru', 'Approval', 'SAMPLING'),
-('user5', '$2y$10$SgfTSDydLz6.ANKSLf8mV./c7Pfemz30c6BqzBaKvYoRWj/t1tD7O', 'Kitagawa Marin', 'Content Creator', 'SAMPLING'),
+('user5', '$2y$10$SgfTSDydLz6.ANKSLf8mV./c7Pfemz30c6BqzBaKvYoRWj/t1tD7O', 'Kitagawa Marin', 'Content Creator', 'METSTAT'),
 ('user6', '$2y$10$L6cELWnWqjWpb3TE30Pw5O2oYEe.06k0yCtrdSa7Ix5e2h3k6ZSC6', 'Katou Megumi', 'Content Creator', 'INSIS');
 
 --
@@ -278,19 +283,13 @@ ALTER TABLE `comment`
 -- AUTO_INCREMENT for table `feedback`
 --
 ALTER TABLE `feedback`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `kategori_list`
 --
 ALTER TABLE `kategori_list`
   MODIFY `kategoriId` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT for table `like`
---
-ALTER TABLE `like`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `role`

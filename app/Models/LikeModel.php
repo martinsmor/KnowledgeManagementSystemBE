@@ -9,12 +9,12 @@ class LikeModel extends Model
     protected $DBGroup          = 'default';
     protected $table            = 'like';
     protected $primaryKey       = 'id';
-    protected $useAutoIncrement = true;
+    protected $useAutoIncrement = false;
     protected $insertID         = 0;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['contentId','username'];
+    protected $allowedFields    = ['id','contentId','username'];
 
     // Dates
     protected $useTimestamps = false;

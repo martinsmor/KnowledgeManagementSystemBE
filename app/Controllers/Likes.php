@@ -45,9 +45,11 @@ class Likes extends ResourceController
     public function create($id = null)
     {
         $model = new LikeModel();
+        $username = $this->request->getVar('username');
         $data = [
+            'id' => $id.$username,
             'contentId' => $id,
-            'username'  => $this->request->getVar('username')
+            'username'  => $username
         ];
         $model->insert($data);
         $response = [
@@ -89,9 +91,9 @@ class Likes extends ResourceController
     {
         $username = $this->request->getVar('username');
         $model = new LikeModel();
-        $data = $model->where('contentId', $id)->first();
+        $data = $model->where('contentId', $id)->where('username',$username)->first();
         if ($data) {
-            $model->delete(['contentId',$id]);
+            $model->delete($id.$username);
             $response = [
                 'status'   => 200,
                 'error'    => null,
@@ -103,16 +105,7 @@ class Likes extends ResourceController
             ];
             return $this->respondDeleted($response);
         } else {
-            $response = [
-                'status'   => 404,
-                'error'    => null,
-                'messages' => [
-                    'success' => 'Gagal',
-                    'contentId' => $id,
-                    'username' => $username
-                ]
-            ];
-            return $this->respond($response);
+            return $this->failNotFound('Not Found');
         }
     }
 }
