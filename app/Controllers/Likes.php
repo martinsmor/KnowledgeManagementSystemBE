@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\ContentModel;
 use App\Models\LikeModel;
 use CodeIgniter\RESTful\ResourceController;
 
@@ -52,6 +53,23 @@ class Likes extends ResourceController
             'username'  => $username
         ];
         $model->insert($data);
+        
+        // update jumlah like di konten
+        $contentModel = new ContentModel();
+        $content = $contentModel->where('contentId',$id)->first();
+        $json = $this->request->getJSON();
+        if ($json) {
+            $temp = [
+                'liked'  => $content['liked']+1
+            ];
+        } else {
+            $temp = [
+                'liked'  => $content['liked']+1
+            ];
+        }
+        // Insert to Database
+        $contentModel->update($id, $temp);
+        
         $response = [
             'status'   => 201,
             'error'    => null,
@@ -94,6 +112,23 @@ class Likes extends ResourceController
         $data = $model->where('contentId', $id)->where('username',$username)->first();
         if ($data) {
             $model->delete($id.$username);
+
+             // update jumlah like di konten
+            $contentModel = new ContentModel();
+            $content = $contentModel->where('contentId',$id)->first();
+            $json = $this->request->getJSON();
+            if ($json) {
+                $temp = [
+                    'liked'  => $content['liked']-1
+                ];
+            } else {
+                $temp = [
+                    'liked'  => $content['liked']-1
+                ];
+            }
+            // Insert to Database
+            $contentModel->update($id, $temp);
+
             $response = [
                 'status'   => 200,
                 'error'    => null,
