@@ -36,20 +36,32 @@ class Content extends ResourceController
         $username = $this->request->getVar('username');
         $model = new ContentModel();
         // order by config
-
-        if ($sort == 'Terbaru') {
+        if ($filter == 'All'){
+if ($sort == 'Terbaru') {
+            $content = $model->like('judul', $search)->where('username', $username)->orderBy("tanggal", 'DESC')->paginate($row, 'content', $page);
+            $total = $model->like('judul', $search)->where('username', $username)->countAllResults();
+        } else if ($sort == 'Judul') {
+            $content = $model->like('judul', $search)->where('username', $username)->orderBy("judul", 'ASC')->paginate($row, 'content', $page);
+            $total = $model->like('judul', $search)->where('username', $username)->countAllResults();
+        } else {
+            $content = $model->like('judul', $search)->where('username', $username)->orderBy("tanggal", 'DESC')->paginate($row, 'content', $page);
+            $total = $model->like('judul', $search)->where('username', $username)->countAllResults();
+        }
+        } else {
+           if ($sort == 'Terbaru') {
             $content = $model->like('judul', $search)->where('username', $username)->where('status',$filter)->orderBy("tanggal", 'DESC')->paginate($row, 'content', $page);
+            $total = $model->like('judul', $search)->where('username', $username)->where('status',$filter)->countAllResults();
         } else if ($sort == 'Judul') {
             $content = $model->like('judul', $search)->where('username', $username)->where('status',$filter)->orderBy("judul", 'ASC')->paginate($row, 'content', $page);
+            $total = $model->like('judul', $search)->where('username', $username)->where('status',$filter)->countAllResults();
         } else {
             $content = $model->like('judul', $search)->where('username', $username)->where('status',$filter)->orderBy("tanggal", 'DESC')->paginate($row, 'content', $page);
+            $total = $model->like('judul', $search)->where('username', $username)->where('status',$filter)->countAllResults();
         }
+        }
+
         
-        // ->paginate($row,'content', $page);            
 
-
-        // count total row
-        $total = $model->like('judul', $search)->where('username', $username)->where('status',$filter)->countAllResults();
         $data = [
             'content' => $content,
             'total' => $total,
