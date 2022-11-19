@@ -25,7 +25,11 @@ class Likes extends ResourceController
      */
     public function show($id = null)
     {
-        //
+        $username = $this->request->getVar('username');
+        $model = new LikeModel();
+        $like = $model->where('id',$id.$username)->first();
+        $response = ($like) ? true : false ;
+        return $this->respond($response);
     }
 
     /**
