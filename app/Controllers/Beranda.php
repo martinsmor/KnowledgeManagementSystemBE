@@ -20,18 +20,16 @@ class Beranda extends ResourceController
         $search = $this->request->getVar('search');
         $sort = $this->request->getVar('sort');
 
-        if($filter && $search && $sort) {
+        if($filter && $sort) {
             $content = $model->where('kategori',$filter)->like('judul',$search,'both')->orderBy($sort,'DESC')->where('status','Approved')->findAll();
-        } elseif($filter && $search) {
+        } elseif($filter) {
             $content = $model->where('kategori',$filter)->like('judul',$search,'both')->where('status','Approved')->findAll();
         } elseif($filter && $sort) {
             $content = $model->where('kategori',$filter)->orderBy($sort,'DESC')->where('status','Approved')->findAll();
-        } elseif ($search && $sort) {
+        } elseif ( $sort) {
             $content = $model->like('judul',$search,'both')->orderBy($sort,'DESC')->where('status','Approved')->findAll();
         } elseif($filter) {
             $content = $model->where('kategori',$filter)->where('status','Approved')->findAll();
-        } elseif ($search) {
-            $content = $model->like('judul',$search,'both')->where('status','Approved')->findAll();
         } elseif ($sort) {
             $content = $model->orderBy($sort,'DESC')->where('status','Approved')->findAll();
         } else {

@@ -87,16 +87,31 @@ class Content extends ResourceController
         $thumbnail = str_replace('data:image/png;base64,', '', $thumbnail);
         $thumbnail = str_replace(' ', '+', $thumbnail);
         $thumbnail = base64_decode($thumbnail);
-        $thumbnailName = uniqid().'.png';
-        $thumbnailPath = WRITEPATH.'uploads/'.$thumbnailName;
-        file_put_contents($thumbnailPath, $thumbnail);
-
-
         
+        if ($thumbnail == '') {
+            $thumbnailName = 'default.png';
+        } else {
+            $thumbnailName = uniqid().'.png';
+            $thumbnailPath = ROOTPATH.'/public/assets/'.$thumbnailName;
+            file_put_contents($thumbnailPath, $thumbnail);
+        }
+        
+
+        $judul = $this->request->getVar('judul');
+        // change space to dash
+        $judul = str_replace(' ', '-', $judul);
+        $judul = strtolower($judul);
+        $judul = preg_replace('/[^A-Za-z0-9\-]/', '', $judul);
+        $judul = preg_replace('/-+/', '-', $judul);
+        $judul = preg_replace('/-+$/', '', $judul);
+        $judul = preg_replace('/^-+/', '', $judul);
+        $judul = $judul.'-'.uniqid();
+
+
         $content = new ContentModel();
         $data = [
             'username' => $this->request->getVar('username'),
-            'contentId' => uniqid(),
+            'contentId' => $judul,
             'tanggal'  => date('Y/m/d'),
             'judul'  => $this->request->getVar('judul'),
             'isi_konten'  => $this->request->getVar('isi_konten'),
@@ -137,13 +152,25 @@ class Content extends ResourceController
      */
     public function update($id = null)
     {
+        $thumbnail = $this->request->getVar('thumbnail');
+        $thumbnail = str_replace('data:image/png;base64,', '', $thumbnail);
+        $thumbnail = str_replace(' ', '+', $thumbnail);
+        $thumbnail = base64_decode($thumbnail);
+
+        if ($thumbnail == '') {
+            $thumbnailName = 'default.png';
+        } else {
+            $thumbnailName = uniqid().'.png';
+            $thumbnailPath = ROOTPATH.'/public/assets/'.$thumbnailName;
+            file_put_contents($thumbnailPath, $thumbnail);
+        }
         $model = new ContentModel();
         $json = $this->request->getJSON();
         if ($json) {
             $data = [
                 'judul' => $json->judul,
                 'isi_konten' => $json->isi_konten,
-                'thumbnail' => $json->thumbnail,
+                'thumbnail' => $thumbnailName,
                 'tanggal' => date('Y/m/d'),
                 'status' => 'Pending',
                 'kategori' => $json->kategori,
