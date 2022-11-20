@@ -21,14 +21,16 @@ class UnitKerja extends ResourceController
         $model = new UnitKerjaModel();
         if ($search) {
             $data = $model->like('unit_kerja', $search)->paginate($row, 'default', $page);
+            $total = $model->like('unit_kerja', $search)->countAllResults();
         } else {
             $data = $model->paginate($row, 'default', $page);
+            $total = $model->countAllResults();
         }
         $response = [
             'status' => 200,
             'error' => null,
             'unit_kerja' => $data,
-            'total' => $model->countAllResults(),
+            'total' => $total,
             'pager' => $model->pager
         ];
 
