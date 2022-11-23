@@ -92,7 +92,8 @@ $page = $this->request->getVar('page') ? $this->request->getVar('page') : 1;
         $data = [
             'contentId' => $id,
             'feedback'  => $this->request->getVar('feedback'),
-            'from' => $this->request->getVar('from')
+            'from' => $this->request->getVar('from'),
+            'id' => $id.$this->request->getVar('from')
         ];
         $model->insert($data);
         $response = [

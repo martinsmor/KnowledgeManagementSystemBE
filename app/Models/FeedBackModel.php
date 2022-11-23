@@ -9,12 +9,12 @@ class FeedBackModel extends Model
     protected $DBGroup          = 'default';
     protected $table            = 'feedback';
     protected $primaryKey       = 'id';
-    protected $useAutoIncrement = true;
+    protected $useAutoIncrement = false;
     protected $insertID         = 0;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['contentId','feedback','from'];
+    protected $allowedFields    = ['id','contentId','feedback','from'];
 
     // Dates
     protected $useTimestamps = false;

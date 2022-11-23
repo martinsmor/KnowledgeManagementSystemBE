@@ -64,6 +64,7 @@ $routes->get('api/unitkerja','UnitKerja::index');
 $routes->get('api/view/(.*)','Content::view/$1');
 $routes->get('api/comment/(.*)','Comments::show/$1');
 $routes->post('api/comment/(.*)','Comments::create/$1');
+$routes->delete('api/comment/(.*)','Comments::delete/$1');
 $routes->post('api/like/(.*)','Likes::create/$1');
 $routes->post('api/unlike/(.*)','Likes::delete/$1');
 $routes->get('api/like/(.*)','Likes::show/$1');

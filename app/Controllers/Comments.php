@@ -93,6 +93,23 @@ class Comments extends ResourceController
      */
     public function delete($id = null)
     {
-        //
+        $model = new CommentModel();
+        $find = $model->where('id',$id)->first();
+        if ($find) {
+            $model->delete($find['id']);
+            $response = [
+                'status'   => 200,
+                'error'    => null,
+                'messages' => [
+                    'success' => 'Komentar berhasil dihapus',
+                    'id' => $find['id'],
+                    'contentId' => $find['contentId'],
+                    'username' => $find['username']
+                ]
+            ];
+            return $this->respondDeleted($response);
+        } else {
+            return $this->failNotFound('Data tidak ditemukan.');
+        }
     }
 }
