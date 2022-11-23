@@ -19,23 +19,38 @@ class Beranda extends ResourceController
         $filter = $this->request->getVar('filter');
         $search = $this->request->getVar('search');
         $sort = $this->request->getVar('sort');
+        $page = $this->request->getVar('page');
+        $limit = $this->request->getVar('limit');
 
         if($filter && $sort) {
-            $content = $model->where('kategori',$filter)->like('judul',$search,'both')->orderBy($sort,'DESC')->where('status','Approved')->findAll();
+            $content = $model->where('kategori',$filter)->like('judul',$search,'both')->orderBy($sort,'DESC')->where('status','Approved')->paginate($limit,'page',$page);
+            $total = $model->where('kategori',$filter)->like('judul',$search,'both')->orderBy($sort,'DESC')->where('status','Approved')->countAllResults();
         } elseif($filter) {
-            $content = $model->where('kategori',$filter)->like('judul',$search,'both')->where('status','Approved')->findAll();
+            $content = $model->where('kategori',$filter)->like('judul',$search,'both')->where('status','Approved')->paginate($limit,'page',$page);
+            $total = $model->where('kategori',$filter)->like('judul',$search,'both')->where('status','Approved')->countAllResults();
         } elseif($filter && $sort) {
-            $content = $model->where('kategori',$filter)->orderBy($sort,'DESC')->where('status','Approved')->findAll();
+            $content = $model->where('kategori',$filter)->orderBy($sort,'DESC')->where('status','Approved')->paginate($limit,'page',$page);
+            $total = $model->where('kategori',$filter)->orderBy($sort,'DESC')->where('status','Approved')->countAllResults();
         } elseif ( $sort) {
-            $content = $model->like('judul',$search,'both')->orderBy($sort,'DESC')->where('status','Approved')->findAll();
+            $content = $model->like('judul',$search,'both')->orderBy($sort,'DESC')->where('status','Approved')->paginate($limit,'page',$page);
+            $total = $model->like('judul',$search,'both')->orderBy($sort,'DESC')->where('status','Approved')->countAllResults();
         } elseif($filter) {
-            $content = $model->where('kategori',$filter)->where('status','Approved')->findAll();
+            $content = $model->where('kategori',$filter)->where('status','Approved')->paginate($limit,'page',$page);
+            $total = $model->where('kategori',$filter)->where('status','Approved')->countAllResults();
         } elseif ($sort) {
-            $content = $model->orderBy($sort,'DESC')->where('status','Approved')->findAll();
+            $content = $model->orderBy($sort,'DESC')->where('status','Approved')->paginate($limit,'page',$page);
+            $total = $model->orderBy($sort,'DESC')->where('status','Approved')->countAllResults();
         } else {
-            $content = $model->where('status','Approved')->findAll();
+            $content = $model->where('status','Approved')->paginate($limit,'page',$page);
+            $total = $model->where('status','Approved')->countAllResults();
         }
-        return $this->respond($content);
+        $data = [
+            'status' => 200,
+            'error' => null,
+            'total' => $total,
+            'data' => $content
+        ];
+        return $this->respond($data);
     }
 
     /**

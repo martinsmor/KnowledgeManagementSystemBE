@@ -87,6 +87,7 @@ $page = $this->request->getVar('page') ? $this->request->getVar('page') : 1;
         $contentmodel = new ContentModel();
         $content = $contentmodel->where('contentId',$id)->first();
         if(!$content) return $this->failNotFound('Konten tidak ditemukan.');
+
         
         $model = new FeedbackModel();
         $data = [

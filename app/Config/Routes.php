@@ -39,7 +39,7 @@ $routes->get('/', 'Home::index');
 $routes->post('register', 'Register::index');
 $routes->post('api/auth', 'Login::index');
 
-$routes->get('api/beranda','Beranda::index');
+$routes->get('api/beranda','Beranda::index', ['filter' => 'auth']);
 
 $routes->post('api/content','Content::create');
 $routes->get('api/content','Content::show');

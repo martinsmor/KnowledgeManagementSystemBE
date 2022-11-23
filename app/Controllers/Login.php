@@ -51,6 +51,7 @@ class Login extends ResourceController
             "role" => $user["role"],
             "unit_kerja" => $user["unit_kerja"],
             "username" => $user['username'],
+            "success" => true
         ];
         return $this->respond($response);
     }
