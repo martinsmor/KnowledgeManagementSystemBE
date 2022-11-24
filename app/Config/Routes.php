@@ -71,6 +71,8 @@ $routes->get('api/like/(.*)','Likes::show/$1');
 
 $routes->get('api/user/(.*)','User::show/$1');
 
+$routes->post('api/notif','Notification::create');
+
 $routes->get('api/all','Content::index');
 
 /*
