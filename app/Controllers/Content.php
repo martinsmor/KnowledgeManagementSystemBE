@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use CodeIgniter\RESTful\ResourceController;
 use App\Models\ContentModel;
-
+use App\Models\FeedBackModel;
 
 class Content extends ResourceController
 {
@@ -38,29 +38,39 @@ class Content extends ResourceController
         // order by config
         if ($filter == 'All'){
 if ($sort == 'Terbaru') {
-            $content = $model->like('judul', $search)->where('username', $username)->join('feedback','feedback.contentId = content.contentId','left outer')->orderBy("tanggal", 'DESC')->paginate($row, 'content', $page);
-            $total = $model->like('judul', $search)->where('username', $username)->join('feedback','feedback.contentId = content.contentId','left outer')->countAllResults();
+            $content = $model->like('judul', $search)->where('username', $username)->orderBy("tanggal", 'DESC')->paginate($row, 'content', $page);
+            $total = $model->like('judul', $search)->where('username', $username)->countAllResults();
         } else if ($sort == 'Judul') {
-            $content = $model->like('judul', $search)->where('username', $username)->join('feedback','feedback.contentId = content.contentId','left outer')->orderBy("judul", 'ASC')->paginate($row, 'content', $page);
-            $total = $model->like('judul', $search)->where('username', $username)->join('feedback','feedback.contentId = content.contentId','left outer')->countAllResults();
+            $content = $model->like('judul', $search)->where('username', $username)->orderBy("judul", 'ASC')->paginate($row, 'content', $page);
+            $total = $model->like('judul', $search)->where('username', $username)->countAllResults();
         } else {
-            $content = $model->like('judul', $search)->where('username', $username)->join('feedback','feedback.contentId = content.contentId','left outer')->orderBy("tanggal", 'DESC')->paginate($row, 'content', $page);
-            $total = $model->like('judul', $search)->where('username', $username)->join('feedback','feedback.contentId = content.contentId','left outer')->countAllResults();
+            $content = $model->like('judul', $search)->where('username', $username)->orderBy("tanggal", 'DESC')->paginate($row, 'content', $page);
+            $total = $model->like('judul', $search)->where('username', $username)->countAllResults();
         }
         } else {
-           if ($sort == 'Terbaru') {
-            $content = $model->like('judul', $search)->where('username', $username)->where('status',$filter)->join('feedback','feedback.contentId = content.contentId','left outer')->orderBy("tanggal", 'DESC')->paginate($row, 'content', $page);
+            if ($sort == 'Terbaru') {
+            $content = $model->like('judul', $search)->where('username', $username)->where('status',$filter)->orderBy("tanggal", 'DESC')->paginate($row, 'content', $page);
             $total = $model->like('judul', $search)->where('username', $username)->where('status',$filter)->countAllResults();
-        } else if ($sort == 'Judul') {
-            $content = $model->like('judul', $search)->where('username', $username)->where('status',$filter)->join('feedback','feedback.contentId = content.contentId','left outer')->orderBy("judul", 'ASC')->paginate($row, 'content', $page);
-            $total = $model->like('judul', $search)->where('username', $username)->where('status',$filter)->countAllResults();
-        } else {
-            $content = $model->like('judul', $search)->where('username', $username)->where('status',$filter)->join('feedback','feedback.contentId = content.contentId','left outer')->orderBy("tanggal", 'DESC')->paginate($row, 'content', $page);
-            $total = $model->like('judul', $search)->where('username', $username)->where('status',$filter)->join('feedback','feedback.contentId = content.contentId','left outer')->countAllResults();
-        }
+            } else if ($sort == 'Judul') {
+                $content = $model->like('judul', $search)->where('username', $username)->where('status',$filter)->orderBy("judul", 'ASC')->paginate($row, 'content', $page);
+                $total = $model->like('judul', $search)->where('username', $username)->where('status',$filter)->countAllResults();
+            } else {
+                $content = $model->like('judul', $search)->where('username', $username)->where('status',$filter)->orderBy("tanggal", 'DESC')->paginate($row, 'content', $page);
+                $total = $model->like('judul', $search)->where('username', $username)->where('status',$filter)->countAllResults();
+            }
         }
 
-        
+        $fm = new FeedBackModel();
+        for ($i=0; $i < sizeof($content); $i++) { 
+            $feedback = $fm->where('contentId',$content[$i]['contentId'])->first();
+            if($feedback) {
+                $content[$i]['feedback'] = $feedback['feedback'];
+                $content[$i]['feedback_from'] = $feedback['from'];
+            } else {
+                $content[$i]['feedback'] = null;
+                $content[$i]['feedback_from'] = null;
+            }
+        }
 
         $data = [
             'content' => $content,

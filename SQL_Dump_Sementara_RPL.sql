@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 19, 2022 at 10:26 AM
+-- Generation Time: Nov 24, 2022 at 03:56 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.5
 
@@ -21,13 +21,14 @@ SET time_zone = "+00:00";
 -- Table structure for table `comment`
 --
 
-CREATE TABLE `comment` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `comment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `contentId` varchar(100) NOT NULL,
   `username` varchar(100) NOT NULL,
   `isi_comment` varchar(1000) NOT NULL,
-  `tanggal` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `tanggal` date NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `comment`
@@ -35,8 +36,6 @@ CREATE TABLE `comment` (
 
 INSERT INTO `comment` (`id`, `contentId`, `username`, `isi_comment`, `tanggal`) VALUES
 (1, '2', 'user1', 'Waduh sia sia dong panen ganja 1 ton', '2022-11-16'),
-(2, '1', 'user4', 'Kamu nanya?', '0000-00-00'),
-(3, '1', 'user4', 'Kamu nanya?', '0000-00-00'),
 (4, '5', 'user4', 'Kamu nanya?', '0000-00-00');
 
 -- --------------------------------------------------------
@@ -45,7 +44,7 @@ INSERT INTO `comment` (`id`, `contentId`, `username`, `isi_comment`, `tanggal`) 
 -- Table structure for table `content`
 --
 
-CREATE TABLE `content` (
+CREATE TABLE IF NOT EXISTS `content` (
   `contentId` varchar(100) NOT NULL,
   `username` varchar(100) NOT NULL,
   `tanggal` date NOT NULL,
@@ -55,7 +54,9 @@ CREATE TABLE `content` (
   `liked` int(11) NOT NULL,
   `kategori` varchar(50) NOT NULL,
   `tags` text NOT NULL,
-  `status` varchar(50) NOT NULL
+  `status` varchar(50) NOT NULL,
+  PRIMARY KEY (`contentId`),
+  KEY `kategori` (`kategori`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -63,7 +64,7 @@ CREATE TABLE `content` (
 --
 
 INSERT INTO `content` (`contentId`, `username`, `tanggal`, `judul`, `isi_konten`, `thumbnail`, `liked`, `kategori`, `tags`, `status`) VALUES
-('1', 'user3', '2022-11-13', 'Content Error', 'Kesalahan yang disebabkan oleh jawaban responden maupun kesalahan pencatatan oleh petugas. Pengukuran dilakukan dengan mengukur perbedaan isian yang tercantum pada dokumen hasil pencacahan GB SE dengan UC PES.', 'https://dmm0a91a1r04e.cloudfront.net/i3O7AswS3pMet', 0, 'Ekonomi', 'Survei Pencacahan 2022', 'Approved'),
+('1', 'user3', '2022-11-13', 'Content Error', 'Kesalahan yang disebabkan oleh jawaban responden maupun kesalahan pencatatan oleh petugas. Pengukuran dilakukan dengan mengukur perbedaan isian yang tercantum pada dokumen hasil pencacahan GB SE dengan UC PES.', 'https://dmm0a91a1r04e.cloudfront.net/i3O7AswS3pMet', 3, 'Ekonomi', 'Survei Pencacahan 2022', 'Approved'),
 ('10', 'user1', '2022-11-13', 'Pernikahan Not Found', 'ahhahahahaha', 'https://upload.wikimedia.org/wikipedia/commons/3/3', 0, 'Kependudukan', 'SP2020 Rudi', 'Pending'),
 ('15', 'user2', '2022-11-13', 'Pernikahan Not Found', 'ahhahahahaha', 'https://upload.wikimedia.org/wikipedia/commons/3/3', 0, 'Kependudukan', 'SP2020 Rudi', 'Pending'),
 ('16', 'user2', '2022-11-13', 'Pernikahan Not Found', 'ahhahahahaha', 'https://upload.wikimedia.org/wikipedia/commons/3/3', 0, 'Kependudukan', 'SP2020 Rudi', 'Pending'),
@@ -82,11 +83,12 @@ INSERT INTO `content` (`contentId`, `username`, `tanggal`, `judul`, `isi_konten`
 -- Table structure for table `feedback`
 --
 
-CREATE TABLE `feedback` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `feedback` (
+  `id` varchar(100) NOT NULL,
   `contentId` varchar(100) NOT NULL,
   `feedback` text NOT NULL,
-  `from` varchar(50) NOT NULL
+  `from` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -94,9 +96,8 @@ CREATE TABLE `feedback` (
 --
 
 INSERT INTO `feedback` (`id`, `contentId`, `feedback`, `from`) VALUES
-(1, '1', 'Kontennya busuk', 'user4'),
-(2, '1', 'Kontennya busuk', 'user2'),
-(3, '1', 'Kontennya busuk', 'user2');
+('1user2', '1', 'Yang bikin goblok', 'user2'),
+('4user2', '4', 'Yang bikin goblok', 'user2');
 
 -- --------------------------------------------------------
 
@@ -104,10 +105,12 @@ INSERT INTO `feedback` (`id`, `contentId`, `feedback`, `from`) VALUES
 -- Table structure for table `kategori_list`
 --
 
-CREATE TABLE `kategori_list` (
-  `kategoriId` int(10) NOT NULL,
-  `nama_kategori` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE IF NOT EXISTS `kategori_list` (
+  `kategoriId` int(10) NOT NULL AUTO_INCREMENT,
+  `nama_kategori` varchar(50) NOT NULL,
+  PRIMARY KEY (`kategoriId`),
+  UNIQUE KEY `nama_kategori` (`nama_kategori`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `kategori_list`
@@ -129,10 +132,12 @@ INSERT INTO `kategori_list` (`kategoriId`, `nama_kategori`) VALUES
 -- Table structure for table `like`
 --
 
-CREATE TABLE `like` (
+CREATE TABLE IF NOT EXISTS `like` (
   `id` varchar(100) NOT NULL,
   `contentId` varchar(100) NOT NULL,
-  `username` varchar(100) NOT NULL
+  `username` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `cont_like` (`contentId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -140,7 +145,35 @@ CREATE TABLE `like` (
 --
 
 INSERT INTO `like` (`id`, `contentId`, `username`) VALUES
-('16user5', '16', 'user5');
+('16user5', '16', 'user5'),
+('1user1', '1', 'user1'),
+('1user2', '1', 'user2'),
+('1user3', '1', 'user3');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notification`
+--
+
+CREATE TABLE IF NOT EXISTS `notification` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(100) NOT NULL,
+  `text` text NOT NULL,
+  `status` varchar(10) NOT NULL,
+  `created_at` date NOT NULL,
+  `updated_at` date NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `notification`
+--
+
+INSERT INTO `notification` (`id`, `username`, `text`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'user3', 'Welcome', 'unread', '2022-11-23', '2022-11-23'),
+(2, 'user3', 'Anda Terblokir', 'unread', '2022-11-23', '2022-11-23'),
+(3, 'user5', 'Selamat Pagi', 'unread', '2022-11-23', '2022-11-23');
 
 -- --------------------------------------------------------
 
@@ -148,10 +181,12 @@ INSERT INTO `like` (`id`, `contentId`, `username`) VALUES
 -- Table structure for table `role`
 --
 
-CREATE TABLE `role` (
-  `id` int(11) NOT NULL,
-  `role` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE IF NOT EXISTS `role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `role` (`role`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `role`
@@ -169,11 +204,14 @@ INSERT INTO `role` (`id`, `role`) VALUES
 -- Table structure for table `unit_kerja`
 --
 
-CREATE TABLE `unit_kerja` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `unit_kerja` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `unit_kerja_kode` varchar(10) NOT NULL,
-  `unit_kerja` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `unit_kerja` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unit_kerja_kode` (`unit_kerja_kode`),
+  UNIQUE KEY `unit_kerja` (`unit_kerja`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `unit_kerja`
@@ -191,12 +229,13 @@ INSERT INTO `unit_kerja` (`id`, `unit_kerja_kode`, `unit_kerja`) VALUES
 -- Table structure for table `user`
 --
 
-CREATE TABLE `user` (
+CREATE TABLE IF NOT EXISTS `user` (
   `username` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   `nama` varchar(100) NOT NULL,
   `role` varchar(50) NOT NULL,
-  `unit_kerja` varchar(100) NOT NULL
+  `unit_kerja` varchar(100) NOT NULL,
+  PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -210,96 +249,4 @@ INSERT INTO `user` (`username`, `password`, `nama`, `role`, `unit_kerja`) VALUES
 ('user4', '$2y$10$irZ87tbdZuUyNMQEyGv8CemzDfbhMB1FcNlP2pwZad1ij2JshOPAG', 'Gojo Satoru', 'Approval', 'SAMPLING'),
 ('user5', '$2y$10$SgfTSDydLz6.ANKSLf8mV./c7Pfemz30c6BqzBaKvYoRWj/t1tD7O', 'Kitagawa Marin', 'Content Creator', 'METSTAT'),
 ('user6', '$2y$10$L6cELWnWqjWpb3TE30Pw5O2oYEe.06k0yCtrdSa7Ix5e2h3k6ZSC6', 'Katou Megumi', 'Content Creator', 'INSIS');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `comment`
---
-ALTER TABLE `comment`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `content`
---
-ALTER TABLE `content`
-  ADD PRIMARY KEY (`contentId`),
-  ADD KEY `kategori` (`kategori`);
-
---
--- Indexes for table `feedback`
---
-ALTER TABLE `feedback`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `kategori_list`
---
-ALTER TABLE `kategori_list`
-  ADD PRIMARY KEY (`kategoriId`),
-  ADD UNIQUE KEY `nama_kategori` (`nama_kategori`);
-
---
--- Indexes for table `like`
---
-ALTER TABLE `like`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `cont_like` (`contentId`);
-
---
--- Indexes for table `role`
---
-ALTER TABLE `role`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `role` (`role`);
-
---
--- Indexes for table `unit_kerja`
---
-ALTER TABLE `unit_kerja`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `unit_kerja_kode` (`unit_kerja_kode`),
-  ADD UNIQUE KEY `unit_kerja` (`unit_kerja`);
-
---
--- Indexes for table `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`username`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `comment`
---
-ALTER TABLE `comment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `feedback`
---
-ALTER TABLE `feedback`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `kategori_list`
---
-ALTER TABLE `kategori_list`
-  MODIFY `kategoriId` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT for table `role`
---
-ALTER TABLE `role`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT for table `unit_kerja`
---
-ALTER TABLE `unit_kerja`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
