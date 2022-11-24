@@ -44,6 +44,13 @@ class Beranda extends ResourceController
             $content = $model->where('status','Approved')->paginate($limit,'page',$page);
             $total = $model->where('status','Approved')->countAllResults();
         }
+
+        $usermodel = new UserModel();
+        for ($i=0; $i < sizeof($content); $i++) { 
+            $user = $usermodel->where('username',$content[$i]['username'])->first();
+            $content[$i]['nama'] = $user['nama'];
+        }
+        
         $data = [
             'status' => 200,
             'error' => null,
