@@ -55,7 +55,7 @@ $routes->get('api/user','User::index', ['filter' => 'auth']);
 $routes->get('api/user/role','User::getRole', ['filter' => 'auth']);
 
 $routes->post('api/category','Kategori::create', ['filter' => 'auth']);
-$routes->get('api/category','Kategori::index', ['filter' => 'auth']);
+$routes->get('api/category','Kategori::index');
 $routes->delete('api/category/(.*)','Kategori::delete/$1', ['filter' => 'auth']);
 $routes->put('api/category/(.*)','Kategori::update/$1', ['filter' => 'auth']);
 

@@ -141,7 +141,7 @@ if ($sort == 'Terbaru') {
             'liked'  => 0,
             'kategori' => $this->request->getVar('kategori'),
             'tags' => $this->request->getVar('tags'),
-            'status'  => "Pending"
+            'status'  => "Menunggu"
         ];
         $content->insert($data);
         $response = [
@@ -194,7 +194,7 @@ if ($sort == 'Terbaru') {
                 'isi_konten' => $json->isi_konten,
                 'thumbnail' => $thumbnailName,
                 'tanggal' => date('Y/m/d'),
-                'status' => 'Pending',
+                'status' => 'Menunggu',
                 'kategori' => $json->kategori,
                 'tags' => $json->tags
             ];
@@ -205,7 +205,7 @@ if ($sort == 'Terbaru') {
                 'isi_konten' => $input['isi_konten'],
                 'thumbnail' => $input['thumbnail'],
                 'tanggal' => date('Y/m/d'),
-                'status' => "Pending",
+                'status' => "Menunggu",
                 'kategori' => $input['kategori'],
                 'tags' => $input['tags']
             ];

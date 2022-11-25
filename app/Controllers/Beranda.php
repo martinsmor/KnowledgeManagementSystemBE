@@ -23,26 +23,26 @@ class Beranda extends ResourceController
         $limit = $this->request->getVar('limit');
 
         if($filter && $sort) {
-            $content = $model->where('kategori',$filter)->like('judul',$search,'both')->orderBy($sort,'DESC')->where('status','Approved')->paginate($limit,'page',$page);
-            $total = $model->where('kategori',$filter)->like('judul',$search,'both')->orderBy($sort,'DESC')->where('status','Approved')->countAllResults();
+            $content = $model->where('kategori',$filter)->like('judul',$search,'both')->orderBy($sort,'DESC')->where('status','Diterima')->paginate($limit,'page',$page);
+            $total = $model->where('kategori',$filter)->like('judul',$search,'both')->orderBy($sort,'DESC')->where('status','Diterima')->countAllResults();
         } elseif($filter) {
-            $content = $model->where('kategori',$filter)->like('judul',$search,'both')->where('status','Approved')->paginate($limit,'page',$page);
-            $total = $model->where('kategori',$filter)->like('judul',$search,'both')->where('status','Approved')->countAllResults();
+            $content = $model->where('kategori',$filter)->like('judul',$search,'both')->where('status','Diterima')->paginate($limit,'page',$page);
+            $total = $model->where('kategori',$filter)->like('judul',$search,'both')->where('status','Diterima')->countAllResults();
         } elseif($filter && $sort) {
-            $content = $model->where('kategori',$filter)->orderBy($sort,'DESC')->where('status','Approved')->paginate($limit,'page',$page);
-            $total = $model->where('kategori',$filter)->orderBy($sort,'DESC')->where('status','Approved')->countAllResults();
+            $content = $model->where('kategori',$filter)->orderBy($sort,'DESC')->where('status','Diterima')->paginate($limit,'page',$page);
+            $total = $model->where('kategori',$filter)->orderBy($sort,'DESC')->where('status','Diterima')->countAllResults();
         } elseif ( $sort) {
-            $content = $model->like('judul',$search,'both')->orderBy($sort,'DESC')->where('status','Approved')->paginate($limit,'page',$page);
-            $total = $model->like('judul',$search,'both')->orderBy($sort,'DESC')->where('status','Approved')->countAllResults();
+            $content = $model->like('judul',$search,'both')->orderBy($sort,'DESC')->where('status','Diterima')->paginate($limit,'page',$page);
+            $total = $model->like('judul',$search,'both')->orderBy($sort,'DESC')->where('status','Diterima')->countAllResults();
         } elseif($filter) {
-            $content = $model->where('kategori',$filter)->where('status','Approved')->paginate($limit,'page',$page);
-            $total = $model->where('kategori',$filter)->where('status','Approved')->countAllResults();
+            $content = $model->where('kategori',$filter)->where('status','Diterima')->paginate($limit,'page',$page);
+            $total = $model->where('kategori',$filter)->where('status','Diterima')->countAllResults();
         } elseif ($sort) {
-            $content = $model->orderBy($sort,'DESC')->where('status','Approved')->paginate($limit,'page',$page);
-            $total = $model->orderBy($sort,'DESC')->where('status','Approved')->countAllResults();
+            $content = $model->orderBy($sort,'DESC')->where('status','Diterima')->paginate($limit,'page',$page);
+            $total = $model->orderBy($sort,'DESC')->where('status','Diterima')->countAllResults();
         } else {
-            $content = $model->where('status','Approved')->paginate($limit,'page',$page);
-            $total = $model->where('status','Approved')->countAllResults();
+            $content = $model->where('status','Diterima')->paginate($limit,'page',$page);
+            $total = $model->where('status','Diterima')->countAllResults();
         }
 
         $usermodel = new UserModel();

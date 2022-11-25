@@ -31,13 +31,13 @@ $page = $this->request->getVar('page') ? $this->request->getVar('page') : 1;
         $contentModel = new ContentModel();
 
         if ($sort == 'Terbaru') {
-           $content = $contentModel->where('status','Pending')->orderBy('tanggal', 'DESC')->like('judul', $search)->paginate($row, 'default', $page);
+           $content = $contentModel->where('status','Menunggu')->orderBy('tanggal', 'DESC')->like('judul', $search)->paginate($row, 'default', $page);
         } elseif ($sort == 'Judul') {
-            $content = $contentModel->where('status','Pending')->orderBy('judul', 'ASC')->like('judul', $search)->paginate($row, 'default', $page);
+            $content = $contentModel->where('status','Menunggu')->orderBy('judul', 'ASC')->like('judul', $search)->paginate($row, 'default', $page);
         }
         
-        // $content = $contentModel->where('status','Pending')->like('judul',$search)->paginate($row, 'default', $page);
-        $total = $contentModel->where('status','Pending')->like('judul',$search)->countAllResults();
+        // $content = $contentModel->where('status','Menunggu')->like('judul',$search)->paginate($row, 'default', $page);
+        $total = $contentModel->where('status','Menunggu')->like('judul',$search)->countAllResults();
 
         $match = [];
         $k = 0;
@@ -50,6 +50,9 @@ $page = $this->request->getVar('page') ? $this->request->getVar('page') : 1;
                 }
              }
         }
+        $total = sizeof($match);
+
+
         $data = [
             'content' => $match,
             'total' => $total
