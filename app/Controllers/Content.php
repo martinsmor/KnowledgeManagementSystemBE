@@ -86,6 +86,11 @@ if ($sort == 'Terbaru') {
     {
         $model = new ContentModel();
         $content = $model->where("contentId",$id)->first();
+
+        $usermodel = new UserModel();
+        $user = $usermodel->where('username',$content['username'])->first();
+        $content['nama'] = $user['nama'];
+
         return $this->respond($content);
     }
 
@@ -233,8 +238,7 @@ if ($sort == 'Terbaru') {
                 'username' => $ua[$i]['username'],
                 'text' => $cc['nama']. ' telah mengajukan konten (edit)',
                 'status' => 'unread',
-                'created_at' => date('Y/m/d'),
-                'updated_at' => date('Y/m/d')
+                'created_at' => date('Y/m/d')
             ];
             $nm->insert($notif);
         }
