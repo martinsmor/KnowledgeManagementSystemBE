@@ -49,6 +49,7 @@ class Beranda extends ResourceController
         for ($i=0; $i < sizeof($content); $i++) { 
             $user = $usermodel->where('username',$content[$i]['username'])->first();
             $content[$i]['nama'] = $user['nama'];
+            $content[$i]['profile_photo'] = $user['profile_photo'];
         }
         
         $data = [
