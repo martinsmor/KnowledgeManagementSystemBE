@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use App\Models\ContentModel;
 use App\Models\LikeModel;
+use App\Models\NotificationModel;
+use App\Models\UserModel;
 use CodeIgniter\RESTful\ResourceController;
 
 class Likes extends ResourceController
@@ -73,6 +75,22 @@ class Likes extends ResourceController
         }
         // Insert to Database
         $contentModel->update($id, $temp);
+
+        // buat notif
+        $nm = new NotificationModel();
+        $um = new UserModel();
+
+        $liker = $um->where('username',$data['username'])->first();
+        $cc = $um->where('username',$content['username'])->first();
+
+        $notif = [
+            'username' => $cc['username'],
+            'text' => 'Konten Anda disukai oleh '. $liker['nama'],
+            'status' => 'unread',
+            'created_at' => date('Y/m/d'),
+            'contentId' => $id
+        ];
+        $nm->insert($notif);
         
         $response = [
             'status'   => 201,

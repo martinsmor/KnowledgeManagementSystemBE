@@ -151,7 +151,27 @@ if ($sort == 'Terbaru') {
             'tags' => $this->request->getVar('tags'),
             'status'  => "Menunggu"
         ];
+
         $content->insert($data);
+        $c = $content->where('contentId',$data['contentId'])->first();
+
+        //kirim notif
+        $nm = new NotificationModel();
+        $um = new UserModel();
+        $cc = $um->where('username',$c['username'])->first(); //ambil data content creator
+        $ua = $um->where('unit_kerja',$cc['unit_kerja'])->where('role','Approval')->findAll(); //cari semua approval di unit kerja bersangkutan
+
+        for ($i=0; $i < sizeof($ua); $i++) { 
+            $notif = [
+                'username' => $ua[$i]['username'],
+                'text' => $cc['nama']. ' telah membuat pengajuan konten',
+                'status' => 'unread',
+                'created_at' => date('Y/m/d'),
+                'contentId' => $c['contentId']
+            ];
+            $nm->insert($notif);
+        }
+
         $response = [
             'status'   => 201,
             'error'    => null,
@@ -239,7 +259,8 @@ if ($sort == 'Terbaru') {
                 'username' => $ua[$i]['username'],
                 'text' => $cc['nama']. ' telah mengajukan konten (edit)',
                 'status' => 'unread',
-                'created_at' => date('Y/m/d')
+                'created_at' => date('Y/m/d'),
+                'contentId' => $id
             ];
             $nm->insert($notif);
         }

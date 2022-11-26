@@ -5,6 +5,7 @@ namespace App\Controllers;
 use CodeIgniter\RESTful\ResourceController;
 use App\Models\CommentModel;
 use App\Models\ContentModel;
+use App\Models\NotificationModel;
 use App\Models\UserModel;
 use PhpParser\Comment;
 
@@ -82,6 +83,23 @@ class Comments extends ResourceController
         }
         // Insert to Database
         $contentModel->update($id, $temp);
+
+        //buat notif
+        $nm = new NotificationModel();
+        $um = new UserModel();
+
+        $komentator = $um->where('username',$data['username'])->first();
+        $cc = $um->where('username',$content['username'])->first();
+
+        $notif = [
+            'username' => $cc['username'],
+            'text' => 'Konten Anda dikomentari oleh '. $komentator['nama'],
+            'status' => 'unread',
+            'created_at' => date('Y/m/d'),
+            'contentId' => $id
+        ];
+        $nm->insert($notif);
+        
 
         $response = [
             'status'   => 201,

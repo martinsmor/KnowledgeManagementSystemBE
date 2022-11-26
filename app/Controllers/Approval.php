@@ -5,6 +5,7 @@ namespace App\Controllers;
 use CodeIgniter\RESTful\ResourceController;
 use App\Models\ContentModel;
 use App\Models\FeedBackModel;
+use App\Models\NotificationModel;
 use App\Models\UserModel;
 
 class Approval extends ResourceController
@@ -143,7 +144,35 @@ $page = $this->request->getVar('page') ? $this->request->getVar('page') : 1;
         }
         // Insert to Database
         $model->update($id, $data);
-        $response = [
+        $c = $model->where('contentId',$id)->first();
+        
+
+        // buat notif
+        $nm = new NotificationModel();
+        $um = new UserModel();
+        $cc = $um->where('username',$c['username'])->first();
+
+        if($data['status']=='Diterima') {
+            $notif = [
+                'username' => $cc['username'],
+                'text' => 'Pengajuan konten Anda telah diterima',
+                'status' => 'unread',
+                'created_at' => date('Y/m/d'),
+                'contentId' => $id
+            ];
+            $nm->insert($notif);
+         } else if($data['status']=='Ditolak') {
+            $notif = [
+                'username' => $cc['username'],
+                'text' => 'Pengajuan konten Anda ditolak oleh Approval',
+                'status' => 'unread',
+                'created_at' => date('Y/m/d'),
+                'contentId' => $id
+            ];
+            $nm->insert($notif);
+         }
+
+         $response = [
             'status'   => 200,
             'error'    => null,
             'messages' => [

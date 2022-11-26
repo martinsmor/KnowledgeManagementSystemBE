@@ -14,7 +14,7 @@ class CommentModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['contentId','username','isi_comment'];
+    protected $allowedFields    = ['contentId','username','isi_comment','tanggal'];
 
     // Dates
     protected $useTimestamps = false;
