@@ -21,7 +21,7 @@ class Approval extends ResourceController
         $search = $this->request->getVar('search');
         $model = new UserModel();
         $approval = $model->where('username',$username)->first();
-$page = $this->request->getVar('page') ? $this->request->getVar('page') : 1;
+        $page = $this->request->getVar('page') ? $this->request->getVar('page') : 1;
         $row = $this->request->getVar('limit') ? $this->request->getVar('limit') : 10;
         $sort = $this->request->getVar('sort');
 
@@ -53,6 +53,10 @@ $page = $this->request->getVar('page') ? $this->request->getVar('page') : 1;
         }
         $total = sizeof($match);
 
+        for ($z=0; $z < sizeof($match); $z++) { 
+            $cc = $model->where('username',$match[$z]['username'])->first();
+            $match[$z]['nama'] = $cc['nama'];
+        }
 
         $data = [
             'content' => $match,
