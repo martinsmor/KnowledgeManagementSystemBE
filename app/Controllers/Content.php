@@ -5,6 +5,8 @@ namespace App\Controllers;
 use CodeIgniter\RESTful\ResourceController;
 use App\Models\ContentModel;
 use App\Models\FeedBackModel;
+use App\Models\NotificationModel;
+use App\Models\UserModel;
 
 class Content extends ResourceController
 {
@@ -210,8 +212,33 @@ if ($sort == 'Terbaru') {
                 'tags' => $input['tags']
             ];
         }
+
         // Insert to Database
         $model->update($id, $data);
+        $c = $model->where('contentId',$id)->first();
+
+        // Hapus Feedback
+        $fm = new FeedBackModel();
+        if($fm->where('contentId',$id)->first()) {
+            $fm->where('contentId',$id)->delete();
+        }
+        // Kirim Notif
+        $nm = new NotificationModel();
+        $um = new UserModel();
+        $cc = $um->where('username',$c['username'])->first(); //ambil data content creator
+        $ua = $um->where('unit_kerja',$cc['unit_kerja'])->where('role','Approval')->findAll(); //cari semua approval di unit kerja bersangkutan
+
+        for ($i=0; $i < sizeof($ua); $i++) { 
+            $notif = [
+                'username' => $ua[$i]['username'],
+                'text' => $cc['nama']. ' telah mengajukan konten (edit)',
+                'status' => 'unread',
+                'created_at' => date('Y/m/d'),
+                'updated_at' => date('Y/m/d')
+            ];
+            $nm->insert($notif);
+        }
+
         $response = [
             'status'   => 200,
             'error'    => null,
