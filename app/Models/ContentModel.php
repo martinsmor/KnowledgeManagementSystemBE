@@ -14,7 +14,7 @@ class ContentModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['contentId','username','tanggal','judul','isi_konten','thumbnail','liked','kategori','tags','status'];
+    protected $allowedFields    = ['contentId','username','tanggal','judul','isi_konten','thumbnail','liked','kategori','tags','status','commented'];
 
     // Dates
     protected $useTimestamps = false;

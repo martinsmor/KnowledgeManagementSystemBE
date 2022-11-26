@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 26, 2022 at 07:26 AM
+-- Generation Time: Nov 26, 2022 at 07:36 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.5
 
@@ -23,7 +23,6 @@ USE `rpl_database`;
 -- Table structure for table `comment`
 --
 
-DROP TABLE IF EXISTS `comment`;
 CREATE TABLE IF NOT EXISTS `comment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `contentId` varchar(100) NOT NULL,
@@ -31,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `comment` (
   `isi_comment` varchar(1000) NOT NULL,
   `tanggal` date NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `comment`
@@ -39,7 +38,8 @@ CREATE TABLE IF NOT EXISTS `comment` (
 
 INSERT INTO `comment` (`id`, `contentId`, `username`, `isi_comment`, `tanggal`) VALUES
 (1, '2', 'user1', 'Waduh sia sia dong panen ganja 1 ton', '2022-11-16'),
-(4, '5', 'user4', 'Kamu nanya?', '0000-00-00');
+(4, '5', 'user4', 'Kamu nanya?', '0000-00-00'),
+(5, '2', 'user4', 'Kamu nanya?', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -47,7 +47,6 @@ INSERT INTO `comment` (`id`, `contentId`, `username`, `isi_comment`, `tanggal`) 
 -- Table structure for table `content`
 --
 
-DROP TABLE IF EXISTS `content`;
 CREATE TABLE IF NOT EXISTS `content` (
   `contentId` varchar(100) NOT NULL,
   `username` varchar(100) NOT NULL,
@@ -56,6 +55,7 @@ CREATE TABLE IF NOT EXISTS `content` (
   `isi_konten` longtext NOT NULL,
   `thumbnail` varchar(50) DEFAULT NULL,
   `liked` int(11) NOT NULL,
+  `commented` int(11) NOT NULL DEFAULT 0,
   `kategori` varchar(50) NOT NULL,
   `tags` text NOT NULL,
   `status` varchar(50) NOT NULL,
@@ -67,19 +67,19 @@ CREATE TABLE IF NOT EXISTS `content` (
 -- Dumping data for table `content`
 --
 
-INSERT INTO `content` (`contentId`, `username`, `tanggal`, `judul`, `isi_konten`, `thumbnail`, `liked`, `kategori`, `tags`, `status`) VALUES
-('1', 'user3', '2022-11-25', 'Content Error', 'Kesalahan yang disebabkan oleh jawaban responden maupun kesalahan pencatatan oleh petugas. Pengukuran dilakukan dengan mengukur perbedaan isian yang tercantum pada dokumen hasil pencacahan GB SE dengan UC PES.', ' ', 3, 'Ekonomi', 'Survei Pencacahan 2022', 'Diterima'),
-('10', 'user1', '2022-11-13', 'Pernikahan Not Found', 'ahhahahahaha', 'https://upload.wikimedia.org/wikipedia/commons/3/3', 0, 'Kependudukan', 'SP2020 Rudi', 'Pending'),
-('15', 'user2', '2022-11-13', 'Pernikahan Not Found', 'ahhahahahaha', 'https://upload.wikimedia.org/wikipedia/commons/3/3', 0, 'Kependudukan', 'SP2020 Rudi', 'Pending'),
-('16', 'user2', '2022-11-13', 'Pernikahan Not Found', 'ahhahahahaha', 'https://upload.wikimedia.org/wikipedia/commons/3/3', 0, 'Kependudukan', 'SP2020 Rudi', 'Pending'),
-('2', 'user5', '2022-11-13', 'Pernikahan ini', 'testestes', NULL, 0, 'Kependudukan', '', 'Menunggu'),
-('3', 'user3', '2022-11-13', 'Pernikahan ini', 'ahhahahahaha', NULL, 2, 'Kependudukan', '', 'Menunggu'),
-('4', 'user6', '2022-11-13', 'Pernikahan ini', 'testestes', NULL, 0, 'Kependudukan', '', 'Approved'),
-('5', 'user5', '2022-11-13', 'Pernikahan ini', 'testestes', NULL, 0, 'Kependudukan', '', 'Menunggu'),
-('637245c106eea', 'user5', '2022-11-14', 'Content Error', 'Kesalahan yang disebabkan oleh jawaban responden maupun kesalahan pencatatan oleh petugas. Pengukuran dilakukan dengan mengukur perbedaan isian yang tercantum pada dokumen hasil pencacahan GB SE dengan UC PES.', '637245c102b4f.png', 0, 'Ekonomi', 'Survei Pencacahan 2022', 'Pending'),
-('637245d08bf37', 'user5', '2022-11-14', 'Content Error', 'Kesalahan yang disebabkan oleh jawaban responden maupun kesalahan pencatatan oleh petugas. Pengukuran dilakukan dengan mengukur perbedaan isian yang tercantum pada dokumen hasil pencacahan GB SE dengan UC PES.', '637245d088497.png', 0, 'Ekonomi', 'Survei Pencacahan 2022', 'Pending'),
-('637246691c9ce', 'user5', '2022-11-14', 'Content Error', 'Kesalahan yang disebabkan oleh jawaban responden maupun kesalahan pencatatan oleh petugas. Pengukuran dilakukan dengan mengukur perbedaan isian yang tercantum pada dokumen hasil pencacahan GB SE dengan UC PES.', '637246691883b.png', 0, 'Ekonomi', 'Survei Pencacahan 2022', 'Pending'),
-('7', 'user3', '2022-11-13', 'Pernikahan ini', 'testestes', NULL, 0, 'Kependudukan', '', 'Menunggu');
+INSERT INTO `content` (`contentId`, `username`, `tanggal`, `judul`, `isi_konten`, `thumbnail`, `liked`, `commented`, `kategori`, `tags`, `status`) VALUES
+('1', 'user3', '2022-11-25', 'Content Error', 'Kesalahan yang disebabkan oleh jawaban responden maupun kesalahan pencatatan oleh petugas. Pengukuran dilakukan dengan mengukur perbedaan isian yang tercantum pada dokumen hasil pencacahan GB SE dengan UC PES.', ' ', 3, 0, 'Ekonomi', 'Survei Pencacahan 2022', 'Diterima'),
+('10', 'user1', '2022-11-13', 'Pernikahan Not Found', 'ahhahahahaha', 'https://upload.wikimedia.org/wikipedia/commons/3/3', 0, 0, 'Kependudukan', 'SP2020 Rudi', 'Pending'),
+('15', 'user2', '2022-11-13', 'Pernikahan Not Found', 'ahhahahahaha', 'https://upload.wikimedia.org/wikipedia/commons/3/3', 0, 0, 'Kependudukan', 'SP2020 Rudi', 'Pending'),
+('16', 'user2', '2022-11-13', 'Pernikahan Not Found', 'ahhahahahaha', 'https://upload.wikimedia.org/wikipedia/commons/3/3', 0, 0, 'Kependudukan', 'SP2020 Rudi', 'Pending'),
+('2', 'user5', '2022-11-13', 'Pernikahan ini', 'testestes', NULL, 0, 1, 'Kependudukan', '', 'Menunggu'),
+('3', 'user3', '2022-11-13', 'Pernikahan ini', 'ahhahahahaha', NULL, 2, 0, 'Kependudukan', '', 'Menunggu'),
+('4', 'user6', '2022-11-13', 'Pernikahan ini', 'testestes', NULL, 0, 0, 'Kependudukan', '', 'Approved'),
+('5', 'user5', '2022-11-13', 'Pernikahan ini', 'testestes', NULL, 0, 0, 'Kependudukan', '', 'Menunggu'),
+('637245c106eea', 'user5', '2022-11-14', 'Content Error', 'Kesalahan yang disebabkan oleh jawaban responden maupun kesalahan pencatatan oleh petugas. Pengukuran dilakukan dengan mengukur perbedaan isian yang tercantum pada dokumen hasil pencacahan GB SE dengan UC PES.', '637245c102b4f.png', 0, 0, 'Ekonomi', 'Survei Pencacahan 2022', 'Pending'),
+('637245d08bf37', 'user5', '2022-11-14', 'Content Error', 'Kesalahan yang disebabkan oleh jawaban responden maupun kesalahan pencatatan oleh petugas. Pengukuran dilakukan dengan mengukur perbedaan isian yang tercantum pada dokumen hasil pencacahan GB SE dengan UC PES.', '637245d088497.png', 0, 0, 'Ekonomi', 'Survei Pencacahan 2022', 'Pending'),
+('637246691c9ce', 'user5', '2022-11-14', 'Content Error', 'Kesalahan yang disebabkan oleh jawaban responden maupun kesalahan pencatatan oleh petugas. Pengukuran dilakukan dengan mengukur perbedaan isian yang tercantum pada dokumen hasil pencacahan GB SE dengan UC PES.', '637246691883b.png', 0, 0, 'Ekonomi', 'Survei Pencacahan 2022', 'Pending'),
+('7', 'user3', '2022-11-13', 'Pernikahan ini', 'testestes', NULL, 0, 0, 'Kependudukan', '', 'Menunggu');
 
 -- --------------------------------------------------------
 
@@ -87,7 +87,6 @@ INSERT INTO `content` (`contentId`, `username`, `tanggal`, `judul`, `isi_konten`
 -- Table structure for table `feedback`
 --
 
-DROP TABLE IF EXISTS `feedback`;
 CREATE TABLE IF NOT EXISTS `feedback` (
   `id` varchar(100) NOT NULL,
   `contentId` varchar(100) NOT NULL,
@@ -110,7 +109,6 @@ INSERT INTO `feedback` (`id`, `contentId`, `feedback`, `from`) VALUES
 -- Table structure for table `kategori_list`
 --
 
-DROP TABLE IF EXISTS `kategori_list`;
 CREATE TABLE IF NOT EXISTS `kategori_list` (
   `kategoriId` int(10) NOT NULL AUTO_INCREMENT,
   `nama_kategori` varchar(50) NOT NULL,
@@ -138,7 +136,6 @@ INSERT INTO `kategori_list` (`kategoriId`, `nama_kategori`) VALUES
 -- Table structure for table `like`
 --
 
-DROP TABLE IF EXISTS `like`;
 CREATE TABLE IF NOT EXISTS `like` (
   `id` varchar(100) NOT NULL,
   `contentId` varchar(100) NOT NULL,
@@ -163,7 +160,6 @@ INSERT INTO `like` (`id`, `contentId`, `username`) VALUES
 -- Table structure for table `notification`
 --
 
-DROP TABLE IF EXISTS `notification`;
 CREATE TABLE IF NOT EXISTS `notification` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(100) NOT NULL,
@@ -190,7 +186,6 @@ INSERT INTO `notification` (`id`, `username`, `text`, `status`, `created_at`) VA
 -- Table structure for table `role`
 --
 
-DROP TABLE IF EXISTS `role`;
 CREATE TABLE IF NOT EXISTS `role` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `role` varchar(50) NOT NULL,
@@ -214,7 +209,6 @@ INSERT INTO `role` (`id`, `role`) VALUES
 -- Table structure for table `unit_kerja`
 --
 
-DROP TABLE IF EXISTS `unit_kerja`;
 CREATE TABLE IF NOT EXISTS `unit_kerja` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `unit_kerja_kode` varchar(10) NOT NULL,
@@ -240,7 +234,6 @@ INSERT INTO `unit_kerja` (`id`, `unit_kerja_kode`, `unit_kerja`) VALUES
 -- Table structure for table `user`
 --
 
-DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `username` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,

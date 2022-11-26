@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use CodeIgniter\RESTful\ResourceController;
 use App\Models\CommentModel;
+use App\Models\ContentModel;
 use App\Models\UserModel;
 use PhpParser\Comment;
 
@@ -65,6 +66,23 @@ class Comments extends ResourceController
             'tanggal'  => date('Y/m/d')
         ];
         $model->insert($data);
+
+        //jumlah komentar di konten ++
+        $contentModel = new ContentModel();
+        $content = $contentModel->where('contentId',$id)->first();
+        $json = $this->request->getJSON();
+        if ($json) {
+            $temp = [
+                'commented'  => $content['commented']+1
+            ];
+        } else {
+            $temp = [
+                'commented'  => $content['commented']+1
+            ];
+        }
+        // Insert to Database
+        $contentModel->update($id, $temp);
+
         $response = [
             'status'   => 201,
             'error'    => null,
