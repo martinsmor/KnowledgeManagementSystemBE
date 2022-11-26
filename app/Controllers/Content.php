@@ -90,6 +90,7 @@ if ($sort == 'Terbaru') {
         $usermodel = new UserModel();
         $user = $usermodel->where('username',$content['username'])->first();
         $content['nama'] = $user['nama'];
+        $content['profile_photo'] = $user['profile_photo'];
 
         return $this->respond($content);
     }
