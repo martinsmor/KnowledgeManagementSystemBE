@@ -71,7 +71,7 @@ $routes->get('api/like/(.*)','Likes::show/$1', ['filter' => 'auth']);
 
 $routes->get('api/user/(.*)','User::show/$1', ['filter' => 'auth']);
 
-$routes->post('api/notif','Notification::create');
+$routes->get('api/notif/(.*)','Notification::show/$1');
 
 $routes->get('api/all','Content::index');
 

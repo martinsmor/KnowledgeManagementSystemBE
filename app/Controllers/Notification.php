@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\NotificationModel;
+use App\Models\UserModel;
 use CodeIgniter\RESTful\ResourceController;
 
 class Notification extends ResourceController
@@ -22,9 +23,11 @@ class Notification extends ResourceController
      *
      * @return mixed
      */
-    public function show($id = null)
+    public function show($username = null)
     {
-        //
+        $nm = new NotificationModel();
+        $n = $nm->where('username',$username)->findAll();
+        return $this->respond($n);
     }
 
     /**
