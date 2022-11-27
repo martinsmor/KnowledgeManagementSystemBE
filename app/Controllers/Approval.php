@@ -25,7 +25,8 @@ class Approval extends ResourceController
         $row = $this->request->getVar('limit') ? $this->request->getVar('limit') : 10;
         $sort = $this->request->getVar('sort');
 
-        if($approval['role'] != 'Approval') return $this->respond("This user isn't Approval");
+        if($approval['role'] != 'Approval' ||  ) return $this->respond("This user isn't Approval");
+
 
         $user = $model->where('unit_kerja',$approval['unit_kerja'])->findAll();
 
