@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use CodeIgniter\RESTful\ResourceController;
-use App\Models\KategorilistModel;
+use App\Models\KategoriListModel;
 
 
 class Kategori extends ResourceController
