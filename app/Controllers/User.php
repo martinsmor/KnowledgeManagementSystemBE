@@ -34,11 +34,6 @@ class User extends ResourceController
            $data = $user->select(['username','nama','role','unit_kerja'])->orderBy('username', 'ASC')->like('nama', $search)->paginate($row, 'default', $page);
         }
 
-            
-
-       
-
-
         $total = $user->like('nama', $search)->countAllResults();
         $data = [
             'user' => $data,
