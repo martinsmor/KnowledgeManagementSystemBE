@@ -25,23 +25,25 @@ class User extends ResourceController
         $user = new UserModel();
 
         if ($unitkerja && $role) {
-           $data = $user->select(['username','nama','role','unit_kerja'])->where('unit_kerja', $unitkerja)->where('role', $role)->orderBy('username', 'ASC')->like('nama', $search)->paginate($row, 'default', $page);
+           $data = $user->select(['username','nama','role','unit_kerja'])->where('unit_kerja', $unitkerja)->where('role', $role)->where('role !=','Administrator')->orderBy('username', 'ASC')->like('nama', $search)->paginate($row, 'default', $page);
         } else if ($unitkerja) {
-           $data = $user->select(['username','nama','role','unit_kerja'])->where('unit_kerja', $unitkerja)->orderBy('username', 'ASC')->like('nama', $search)->paginate($row, 'default', $page);
+           $data = $user->select(['username','nama','role','unit_kerja'])->where('unit_kerja', $unitkerja)->where('role !=','Administrator')->orderBy('username', 'ASC')->like('nama', $search)->paginate($row, 'default', $page);
         } else if ($role) {
-           $data = $user->select(['username','nama','role','unit_kerja'])->where('role', $role)->orderBy('username', 'ASC')->like('nama', $search)->paginate($row, 'default', $page);
+           $data = $user->select(['username','nama','role','unit_kerja'])->where('role', $role)->where('role !=','Administrator')->orderBy('username', 'ASC')->like('nama', $search)->paginate($row, 'default', $page);
         } else {
-           $data = $user->select(['username','nama','role','unit_kerja'])->orderBy('username', 'ASC')->like('nama', $search)->paginate($row, 'default', $page);
+           $data = $user->select(['username','nama','role','unit_kerja'])->where('role !=','Administrator')->orderBy('username', 'ASC')->like('nama', $search)->paginate($row, 'default', $page);
         }
 
         $total = $user->like('nama', $search)->countAllResults();
-        $data = [
+
+
+        $response = [
             'user' => $data,
             'total' => $total,
             'pager' => $user->pager
         ];
         
-        return $this->respond($data);
+        return $this->respond($response);
     }
 
     /**
