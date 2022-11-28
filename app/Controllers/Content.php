@@ -202,7 +202,9 @@ if ($sort == 'Terbaru') {
      */
     public function update($id = null)
     {
-        $thumbnail = $this->request->getVar('thumbnail');
+        $editThumbnail = $this->request->getVar('editThumbnail');
+        if ($editThumbnail == true) {
+            $thumbnail = $this->request->getVar('thumbnail');
         $thumbnail = str_replace('data:image/png;base64,', '', $thumbnail);
         $thumbnail = str_replace(' ', '+', $thumbnail);
         $thumbnail = base64_decode($thumbnail);
@@ -214,6 +216,13 @@ if ($sort == 'Terbaru') {
             $thumbnailPath = ROOTPATH.'/public/assets/'.$thumbnailName;
             file_put_contents($thumbnailPath, $thumbnail);
         }
+        } else {
+            $content = new ContentModel();
+            $c = $content->where('contentId',$id)->first();
+            $thumbnailName = $c['thumbnail'];
+        }
+
+        
         $model = new ContentModel();
         $json = $this->request->getJSON();
         if ($json) {
