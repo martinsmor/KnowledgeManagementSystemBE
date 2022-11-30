@@ -30,20 +30,20 @@ class Beranda extends ResourceController
             $content = $model->where('kategori',$filter)->where($query)->where('status','Diterima')->paginate($limit,'page',$page);
             $total = $model->where('kategori',$filter)->where($query)->where('status','Diterima')->countAllResults();
         } elseif($filter && $sort) {
-            $content = $model->where('kategori',$filter)->orderBy($sort,'DESC')->where('status','Diterima')->paginate($limit,'page',$page);
-            $total = $model->where('kategori',$filter)->orderBy($sort,'DESC')->where('status','Diterima')->countAllResults();
+            $content = $model->where('kategori',$filter)->where($query)->orderBy($sort,'DESC')->where('status','Diterima')->paginate($limit,'page',$page);
+            $total = $model->where('kategori',$filter)->where($query)->orderBy($sort,'DESC')->where('status','Diterima')->countAllResults();
         } elseif ($sort) {
-            $content = $model->orderBy($sort,'DESC')->where('status','Diterima')->paginate($limit,'page',$page);
-            $total = $model->orderBy($sort,'DESC')->where('status','Diterima')->countAllResults();
+            $content = $model->orderBy($sort,'DESC')->where($query)->where('status','Diterima')->paginate($limit,'page',$page);
+            $total = $model->orderBy($sort,'DESC')->where($query)->where('status','Diterima')->countAllResults();
         } elseif($filter) {
-            $content = $model->where('kategori',$filter)->where('status','Diterima')->paginate($limit,'page',$page);
-            $total = $model->where('kategori',$filter)->where('status','Diterima')->countAllResults();
+            $content = $model->where('kategori',$filter)->where($query)->where('status','Diterima')->paginate($limit,'page',$page);
+            $total = $model->where('kategori',$filter)->where($query)->where('status','Diterima')->countAllResults();
         } elseif ($search) {
             $content = $model->where($query)->where('status','Diterima')->paginate($limit,'page',$page);
             $total = $model->where($query)->where('status','Diterima')->countAllResults();
         } else {
-            $content = $model->where('status','Diterima')->paginate($limit,'page',$page);
-            $total = $model->where('status','Diterima')->countAllResults();
+            $content = $model->where($query)->where('status','Diterima')->paginate($limit,'page',$page);
+            $total = $model->where($query)->where('status','Diterima')->countAllResults();
         }
 
         $usermodel = new UserModel();
