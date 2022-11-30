@@ -22,7 +22,7 @@ class Beranda extends ResourceController
         $page = $this->request->getVar('page');
         $limit = $this->request->getVar('limit');
 
-            if($filter && $sort) {
+        if($filter && $sort) {
             $content = $model->where('kategori',$filter)->like('judul',$search,'both')->orderBy($sort,'DESC')->where('status','Diterima')->paginate($limit,'page',$page);
             $total = $model->where('kategori',$filter)->like('judul',$search,'both')->orderBy($sort,'DESC')->where('status','Diterima')->countAllResults();
         } elseif($filter) {
@@ -32,8 +32,8 @@ class Beranda extends ResourceController
             $content = $model->where('kategori',$filter)->orderBy($sort,'DESC')->where('status','Diterima')->paginate($limit,'page',$page);
             $total = $model->where('kategori',$filter)->orderBy($sort,'DESC')->where('status','Diterima')->countAllResults();
         } elseif ( $sort) {
-            $content = $model->like('judul',$search,'both')->orderBy($sort,'DESC')->where('status','Diterima')->paginate($limit,'page',$page);
-            $total = $model->like('judul',$search,'both')->orderBy($sort,'DESC')->where('status','Diterima')->countAllResults();
+            $content = $model->like('judul',$search,'both')->orLike('tags',$search,'both')->orderBy($sort,'DESC')->where('status','Diterima')->paginate($limit,'page',$page);
+            $total = $model->like('judul',$search,'both')->orLike('tags',$search,'both')->orderBy($sort,'DESC')->where('status','Diterima')->countAllResults();
         } elseif($filter) {
             $content = $model->where('kategori',$filter)->where('status','Diterima')->paginate($limit,'page',$page);
             $total = $model->where('kategori',$filter)->where('status','Diterima')->countAllResults();

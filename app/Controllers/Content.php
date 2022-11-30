@@ -114,17 +114,35 @@ if ($sort == 'Terbaru') {
     {
         // change thumbnail from base64 to image
         $thumbnail = $this->request->getVar('thumbnail');
+        if ($thumbnail == '') {
+            $thumbnailName = 'default.png';
+        } else{
+            $ext = explode('/', explode(':', substr($thumbnail, 0, strpos($thumbnail, ';')))[1])[1];
+            if ($ext == 'png') {
         $thumbnail = str_replace('data:image/png;base64,', '', $thumbnail);
+        } elseif ($ext == 'jpg') {
+        $thumbnail = str_replace('data:image/jpeg;base64,', '', $thumbnail);
+        } elseif ($ext == 'gif') {
+        $thumbnail = str_replace('data:image/gif;base64,', '', $thumbnail);
+        } elseif ($ext == 'svg') {
+        } else if ($ext == 'jpeg') {
+        $thumbnail = str_replace('data:image/jpeg;base64,', '', $thumbnail);
+        } else {
+        }
         $thumbnail = str_replace(' ', '+', $thumbnail);
         $thumbnail = base64_decode($thumbnail);
         
         if ($thumbnail == '') {
             $thumbnailName = 'default.png';
         } else {
-            $thumbnailName = uniqid().'.png';
+            $thumbnailName = uniqid(). '.' . $ext;
             $thumbnailPath = ROOTPATH.'/public/assets/'.$thumbnailName;
             file_put_contents($thumbnailPath, $thumbnail);
         }
+        }
+        
+        
+    
         
 
         $judul = $this->request->getVar('judul');
@@ -204,14 +222,29 @@ if ($sort == 'Terbaru') {
     {
         $editThumbnail = $this->request->getVar('editThumbnail');
         if ($editThumbnail == true) {
+            
+        
+            
             $thumbnail = $this->request->getVar('thumbnail');
-        $thumbnail = str_replace('data:image/png;base64,', '', $thumbnail);
-        $thumbnail = str_replace(' ', '+', $thumbnail);
-        $thumbnail = base64_decode($thumbnail);
-
         if ($thumbnail == '') {
             $thumbnailName = 'default.png';
+
+            
         } else {
+            $ext = explode('/', explode(':', substr($thumbnail, 0, strpos($thumbnail, ';')))[1])[1];
+            if ($ext == 'png') {
+                $thumbnail = str_replace('data:image/png;base64,', '', $thumbnail);
+                } elseif ($ext == 'jpg') {
+                $thumbnail = str_replace('data:image/jpeg;base64,', '', $thumbnail);
+                } elseif ($ext == 'gif') {
+                $thumbnail = str_replace('data:image/gif;base64,', '', $thumbnail);
+                } elseif ($ext == 'svg') {
+                } else if ($ext == 'jpeg') {
+                $thumbnail = str_replace('data:image/jpeg;base64,', '', $thumbnail);
+                } else {
+                }
+        $thumbnail = str_replace(' ', '+', $thumbnail);
+        $thumbnail = base64_decode($thumbnail);
             $thumbnailName = uniqid().'.png';
             $thumbnailPath = ROOTPATH.'/public/assets/'.$thumbnailName;
             file_put_contents($thumbnailPath, $thumbnail);
@@ -221,8 +254,6 @@ if ($sort == 'Terbaru') {
             $c = $content->where('contentId',$id)->first();
             $thumbnailName = $c['thumbnail'];
         }
-
-        
         $model = new ContentModel();
         $json = $this->request->getJSON();
         if ($json) {
