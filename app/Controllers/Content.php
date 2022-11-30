@@ -8,6 +8,8 @@ use App\Models\FeedBackModel;
 use App\Models\NotificationModel;
 use App\Models\UserModel;
 
+date_default_timezone_set("Asia/Jakarta");
+
 class Content extends ResourceController
 {
     /**
@@ -146,7 +148,7 @@ if ($sort == 'Terbaru') {
         
 
         $judul = $this->request->getVar('judul');
-        // change space to dash
+        // // change space to dash
         $judul = str_replace(' ', '-', $judul);
         $judul = strtolower($judul);
         $judul = preg_replace('/[^A-Za-z0-9\-]/', '', $judul);
@@ -160,7 +162,7 @@ if ($sort == 'Terbaru') {
         $data = [
             'username' => $this->request->getVar('username'),
             'contentId' => $judul,
-            'tanggal'  => date('Y/m/d'),
+            'tanggal'  => date('Y/m/d H:i:s'),
             'judul'  => $this->request->getVar('judul'),
             'isi_konten'  => $this->request->getVar('isi_konten'),
             'thumbnail' => $thumbnailName,
@@ -184,7 +186,7 @@ if ($sort == 'Terbaru') {
                 'username' => $ua[$i]['username'],
                 'text' => $cc['nama']. ' telah membuat pengajuan konten',
                 'status' => 'unread',
-                'created_at' => date('Y/m/d'),
+                'created_at' => date('Y/m/d H:i:s'),
                 'contentId' => $c['contentId']
             ];
             $nm->insert($notif);
@@ -261,7 +263,7 @@ if ($sort == 'Terbaru') {
                 'judul' => $json->judul,
                 'isi_konten' => $json->isi_konten,
                 'thumbnail' => $thumbnailName,
-                'tanggal' => date('Y/m/d'),
+                'tanggal' => date('Y/m/d H:i:s'),
                 'status' => 'Menunggu',
                 'kategori' => $json->kategori,
                 'tags' => $json->tags
@@ -272,7 +274,7 @@ if ($sort == 'Terbaru') {
                 'judul' => $input['judul'],
                 'isi_konten' => $input['isi_konten'],
                 'thumbnail' => $input['thumbnail'],
-                'tanggal' => date('Y/m/d'),
+                'tanggal' => date('Y/m/d H:i:s'),
                 'status' => "Menunggu",
                 'kategori' => $input['kategori'],
                 'tags' => $input['tags']
@@ -299,7 +301,7 @@ if ($sort == 'Terbaru') {
                 'username' => $ua[$i]['username'],
                 'text' => $cc['nama']. ' telah mengajukan konten (edit)',
                 'status' => 'unread',
-                'created_at' => date('Y/m/d'),
+                'created_at' => date('Y/m/d H:i:s'),
                 'contentId' => $id
             ];
             $nm->insert($notif);

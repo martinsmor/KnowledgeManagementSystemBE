@@ -64,7 +64,7 @@ class Comments extends ResourceController
             'contentId' => $id,
             'username'  => $this->request->getVar('username'),
             'isi_comment' => $this->request->getVar('comment'),
-            'tanggal'  => date('Y/m/d')
+            'tanggal'  => date('Y/m/d H:i:s')
         ];
         $model->insert($data);
 
@@ -95,7 +95,7 @@ class Comments extends ResourceController
             'username' => $cc['username'],
             'text' => 'Konten Anda dikomentari oleh '. $komentator['nama'],
             'status' => 'unread',
-            'created_at' => date('Y/m/d'),
+            'created_at' => date('Y/m/d H:i:s'),
             'contentId' => $id
         ];
         $nm->insert($notif);
