@@ -42,7 +42,7 @@ CI_ENVIRONMENT = development
 #--------------------------------------------------------------------
 
 database.default.hostname = localhost
-database.default.database = rpl_database
+database.default.database = nubc3594_rpl
 database.default.username = root
 database.default.password =
 database.default.DBDriver = MySQLi
