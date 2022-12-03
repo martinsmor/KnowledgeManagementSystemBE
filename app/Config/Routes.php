@@ -74,6 +74,7 @@ $routes->get('api/user/(.*)','User::show/$1', ['filter' => 'auth']);
 $routes->get('api/notif/(.*)','Notification::show/$1');
 
 $routes->get('api/all','Content::index');
+$routes->post('api/image','ImageUploader::index');
 
 /*
  * --------------------------------------------------------------------

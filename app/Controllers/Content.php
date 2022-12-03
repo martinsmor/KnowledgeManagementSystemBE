@@ -113,40 +113,15 @@ if ($sort == 'Terbaru') {
      * @return mixed
      */
     public function create()
-    {
-        // change thumbnail from base64 to image
-        $thumbnail = $this->request->getVar('thumbnail');
-        if ($thumbnail == '') {
-            $thumbnailName = 'default.png';
-        } else{
-            $ext = explode('/', explode(':', substr($thumbnail, 0, strpos($thumbnail, ';')))[1])[1];
-            if ($ext == 'png') {
-        $thumbnail = str_replace('data:image/png;base64,', '', $thumbnail);
-        } elseif ($ext == 'jpg') {
-        $thumbnail = str_replace('data:image/jpeg;base64,', '', $thumbnail);
-        } elseif ($ext == 'gif') {
-        $thumbnail = str_replace('data:image/gif;base64,', '', $thumbnail);
-        } elseif ($ext == 'svg') {
-        } else if ($ext == 'jpeg') {
-        $thumbnail = str_replace('data:image/jpeg;base64,', '', $thumbnail);
+    {        
+        $file = $this->request->getFile('cover');
+        if ($file == null) {
+            $fileName = "default.png";
         } else {
+            
+            $file->move(ROOTPATH.'/public/assets/', $file->getRandomName());
+        $fileName = $file->getName();   
         }
-        $thumbnail = str_replace(' ', '+', $thumbnail);
-        $thumbnail = base64_decode($thumbnail);
-        
-        if ($thumbnail == '') {
-            $thumbnailName = 'default.png';
-        } else {
-            $thumbnailName = uniqid(). '.' . $ext;
-            $thumbnailPath = ROOTPATH.'/public/assets/'.$thumbnailName;
-            file_put_contents($thumbnailPath, $thumbnail);
-        }
-        }
-        
-        
-    
-        
-
         $judul = $this->request->getVar('judul');
         // // change space to dash
         $judul = str_replace(' ', '-', $judul);
@@ -165,7 +140,7 @@ if ($sort == 'Terbaru') {
             'tanggal'  => date('Y/m/d H:i:s'),
             'judul'  => $this->request->getVar('judul'),
             'isi_konten'  => $this->request->getVar('isi_konten'),
-            'thumbnail' => $thumbnailName,
+            'thumbnail' => $fileName,
             'liked'  => 0,
             'kategori' => $this->request->getVar('kategori'),
             'tags' => $this->request->getVar('tags'),
@@ -225,8 +200,7 @@ if ($sort == 'Terbaru') {
         $editThumbnail = $this->request->getVar('editThumbnail');
         if ($editThumbnail == true) {
             
-        
-            
+    
             $thumbnail = $this->request->getVar('thumbnail');
         if ($thumbnail == '') {
             $thumbnailName = 'default.png';
