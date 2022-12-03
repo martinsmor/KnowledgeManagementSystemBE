@@ -303,6 +303,10 @@ if ($sort == 'Terbaru') {
         $model = new ContentModel();
         $data = $model->where('contentId', $contentId)->first();
         if ($data) {
+            // delete thumbnail
+            if ($data['thumbnail'] != 'default.png') {
+                unlink(ROOTPATH.'/public/assets/'.$data['thumbnail']);
+            }
             $model->delete($contentId);
             $response = [
                 'status'   => 200,

@@ -55,6 +55,7 @@ class User extends ResourceController
     {
         $user = new UserModel();
         $data = $user->where('username',$username)->first();
+        unset($data['password']);   
         return $this->respond($data);
     }
 
