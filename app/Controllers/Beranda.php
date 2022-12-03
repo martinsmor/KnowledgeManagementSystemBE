@@ -52,7 +52,20 @@ class Beranda extends ResourceController
             $content[$i]['nama'] = $user['nama'];
             $content[$i]['user_photo'] = $user['profile_photo'];
         }
-        
+        // data isi_konten max 300 karakter
+        for ($i=0; $i < sizeof($content); $i++) { 
+            
+            // remove html tag, remove image tag
+            $content[$i]['isi_konten'] = preg_replace('/<img[^>]+\>/i', '', $content[$i]['isi_konten']);
+            $content[$i]['isi_konten'] = strip_tags($content[$i]['isi_konten']);
+            $content[$i]['isi_konten'] = str_replace('&nbsp;','',$content[$i]['isi_konten']);
+            $content[$i]['isi_konten'] = substr($content[$i]['isi_konten'],0,350);
+            if(strlen($content[$i]['isi_konten']) > 300) {
+                $content[$i]['isi_konten'] = $content[$i]['isi_konten'].'...';
+            }
+
+        }
+
         $data = [
             'status' => 200,
             'error' => null,
