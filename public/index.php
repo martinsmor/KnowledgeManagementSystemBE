@@ -1,5 +1,5 @@
 <?php
-header('Access-Control-Allow-Origin: http://127.0.0.1:5173');
+header('Access-Control-Allow-Origin: http://localhost:5173');
 // header("Access-Control-Allow-Origin: https://knowledge.nubisub.site");
 header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With, Token");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
@@ -7,8 +7,8 @@ header("Access-Control-Allow-Credentials: true");
 
 
 $method = $_SERVER['REQUEST_METHOD'];
-if($method == "OPTIONS") {
-die();
+if ($method == "OPTIONS") {
+    die();
 }
 
 // Check PHP version.

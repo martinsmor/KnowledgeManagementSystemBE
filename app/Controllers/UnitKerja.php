@@ -78,7 +78,6 @@ class UnitKerja extends ResourceController
             ]
         ];
         return $this->respondCreated($response);
-
     }
 
     /**
@@ -88,7 +87,6 @@ class UnitKerja extends ResourceController
      */
     public function edit($id = null)
     {
-        
     }
 
     /**
@@ -124,7 +122,7 @@ class UnitKerja extends ResourceController
         return $this->respond($response);
     }
 
-    
+
 
     /**
      * Delete the designated resource object from the model

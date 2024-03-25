@@ -21,53 +21,51 @@ class Beranda extends ResourceController
         $sort = $this->request->getVar('sort');
         $page = $this->request->getVar('page');
         $limit = $this->request->getVar('limit');
-        $query = '(judul LIKE "%'.$search.'%" OR tags LIKE "%'.$search.'%")';
+        $query = '(judul LIKE "%' . $search . '%" OR tags LIKE "%' . $search . '%")';
 
-        if($filter && $sort && $search) {
-            $content = $model->where('kategori',$filter)->where($query)->orderBy($sort,'DESC')->where('status','Diterima')->paginate($limit,'page',$page);
-            $total = $model->where('kategori',$filter)->where($query)->orderBy($sort,'DESC')->where('status','Diterima')->countAllResults();
-        } elseif($filter && $search) {
-            $content = $model->where('kategori',$filter)->where($query)->where('status','Diterima')->paginate($limit,'page',$page);
-            $total = $model->where('kategori',$filter)->where($query)->where('status','Diterima')->countAllResults();
-        } elseif($filter && $sort) {
-            $content = $model->where('kategori',$filter)->where($query)->orderBy($sort,'DESC')->where('status','Diterima')->paginate($limit,'page',$page);
-            $total = $model->where('kategori',$filter)->where($query)->orderBy($sort,'DESC')->where('status','Diterima')->countAllResults();
+        if ($filter && $sort && $search) {
+            $content = $model->where('kategori', $filter)->where($query)->orderBy($sort, 'DESC')->where('status', 'Diterima')->paginate($limit, 'page', $page);
+            $total = $model->where('kategori', $filter)->where($query)->orderBy($sort, 'DESC')->where('status', 'Diterima')->countAllResults();
+        } elseif ($filter && $search) {
+            $content = $model->where('kategori', $filter)->where($query)->where('status', 'Diterima')->paginate($limit, 'page', $page);
+            $total = $model->where('kategori', $filter)->where($query)->where('status', 'Diterima')->countAllResults();
+        } elseif ($filter && $sort) {
+            $content = $model->where('kategori', $filter)->where($query)->orderBy($sort, 'DESC')->where('status', 'Diterima')->paginate($limit, 'page', $page);
+            $total = $model->where('kategori', $filter)->where($query)->orderBy($sort, 'DESC')->where('status', 'Diterima')->countAllResults();
         } elseif ($sort) {
-            $content = $model->orderBy($sort,'DESC')->where($query)->where('status','Diterima')->paginate($limit,'page',$page);
-            $total = $model->orderBy($sort,'DESC')->where($query)->where('status','Diterima')->countAllResults();
-        } elseif($filter) {
-            $content = $model->where('kategori',$filter)->where($query)->where('status','Diterima')->paginate($limit,'page',$page);
-            $total = $model->where('kategori',$filter)->where($query)->where('status','Diterima')->countAllResults();
+            $content = $model->orderBy($sort, 'DESC')->where($query)->where('status', 'Diterima')->paginate($limit, 'page', $page);
+            $total = $model->orderBy($sort, 'DESC')->where($query)->where('status', 'Diterima')->countAllResults();
+        } elseif ($filter) {
+            $content = $model->where('kategori', $filter)->where($query)->where('status', 'Diterima')->paginate($limit, 'page', $page);
+            $total = $model->where('kategori', $filter)->where($query)->where('status', 'Diterima')->countAllResults();
         } elseif ($search) {
-            $content = $model->where($query)->where('status','Diterima')->paginate($limit,'page',$page);
-            $total = $model->where($query)->where('status','Diterima')->countAllResults();
+            $content = $model->where($query)->where('status', 'Diterima')->paginate($limit, 'page', $page);
+            $total = $model->where($query)->where('status', 'Diterima')->countAllResults();
         } else {
-            $content = $model->where($query)->where('status','Diterima')->paginate($limit,'page',$page);
-            $total = $model->where($query)->where('status','Diterima')->countAllResults();
+            $content = $model->where($query)->where('status', 'Diterima')->paginate($limit, 'page', $page);
+            $total = $model->where($query)->where('status', 'Diterima')->countAllResults();
         }
 
         $usermodel = new UserModel();
-        for ($i=0; $i < sizeof($content); $i++) { 
-            $user = $usermodel->where('username',$content[$i]['username'])->first();
+        for ($i = 0; $i < sizeof($content); $i++) {
+            $user = $usermodel->where('username', $content[$i]['username'])->first();
             $content[$i]['nama'] = $user['nama'];
             $content[$i]['user_photo'] = $user['profile_photo'];
         }
         // data isi_konten max 300 karakter
-        for ($i=0; $i < sizeof($content); $i++) { 
-            
+        for ($i = 0; $i < sizeof($content); $i++) {
+
             // remove html tag, remove image tag
             $content[$i]['isi_konten'] = preg_replace('/<img[^>]+\>/i', '', $content[$i]['isi_konten']);
             $content[$i]['isi_konten'] = strip_tags($content[$i]['isi_konten']);
-            $content[$i]['isi_konten'] = str_replace('&nbsp;',' ',$content[$i]['isi_konten']);
-            $content[$i]['isi_konten'] = substr($content[$i]['isi_konten'],0,350);
-            if(strlen($content[$i]['isi_konten']) > 300) {
-                $content[$i]['isi_konten'] = $content[$i]['isi_konten'].'...';
+            $content[$i]['isi_konten'] = str_replace('&nbsp;', ' ', $content[$i]['isi_konten']);
+            $content[$i]['isi_konten'] = substr($content[$i]['isi_konten'], 0, 350);
+            if (strlen($content[$i]['isi_konten']) > 300) {
+                $content[$i]['isi_konten'] = $content[$i]['isi_konten'] . '...';
             }
             // remove href
             $content[$i]['isi_konten'] = preg_replace('/<a[^>]+\>/i', ' ', $content[$i]['isi_konten']);
-            $content[$i]['isi_konten'] = str_replace('</a>',' ',$content[$i]['isi_konten']);
-
-
+            $content[$i]['isi_konten'] = str_replace('</a>', ' ', $content[$i]['isi_konten']);
         }
 
         $data = [
