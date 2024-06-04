@@ -39,42 +39,42 @@ $routes->get('/', 'Home::index');
 $routes->post('register', 'Register::index');
 $routes->post('api/auth', 'Login::index');
 
-$routes->get('api/beranda','Beranda::index');
+$routes->get('api/beranda', 'Beranda::index');
 
-$routes->post('api/content','Content::create', ['filter' => 'auth']);
-$routes->get('api/content','Content::show', ['filter' => 'auth']);
+$routes->post('api/content', 'Content::create', ['filter' => 'auth']);
+$routes->get('api/content', 'Content::show', ['filter' => 'auth']);
 $routes->put('api/content/(.*)', 'Content::update/$1', ['filter' => 'auth']);
 $routes->delete('api/content/(.*)', 'Content::delete/$1', ['filter' => 'auth']);
 
 $routes->get('api/approval', 'Approval::index', ['filter' => 'auth']);
-$routes->put('api/approval/(.*)','Approval::update/$1', ['filter' => 'auth']);
-$routes->post('api/approval/(.*)','Approval::create/$1', ['filter' => 'auth']);
+$routes->put('api/approval/(.*)', 'Approval::update/$1', ['filter' => 'auth']);
+$routes->post('api/approval/(.*)', 'Approval::create/$1', ['filter' => 'auth']);
 
-$routes->put('api/user/(.*)','User::update/$1', ['filter' => 'auth']);
-$routes->get('api/user','User::index', ['filter' => 'auth']);
-$routes->get('api/user/role','User::getRole', ['filter' => 'auth']);
+$routes->put('api/user/(.*)', 'User::update/$1', ['filter' => 'auth']);
+$routes->get('api/user', 'User::index', ['filter' => 'auth']);
+$routes->get('api/user/role', 'User::getRole', ['filter' => 'auth']);
 
-$routes->post('api/category','Kategori::create', ['filter' => 'auth']);
-$routes->get('api/category','Kategori::index');
-$routes->delete('api/category/(.*)','Kategori::delete/$1', ['filter' => 'auth']);
-$routes->put('api/category/(.*)','Kategori::update/$1', ['filter' => 'auth']);
+$routes->post('api/category', 'Kategori::create', ['filter' => 'auth']);
+$routes->get('api/category', 'Kategori::index');
+$routes->delete('api/category/(.*)', 'Kategori::delete/$1', ['filter' => 'auth']);
+$routes->put('api/category/(.*)', 'Kategori::update/$1', ['filter' => 'auth']);
 
-$routes->get('api/unitkerja','UnitKerja::index', ['filter' => 'auth']);
+$routes->get('api/unitkerja', 'UnitKerja::index', ['filter' => 'auth']);
 
-$routes->get('api/view/(.*)','Content::view/$1');
-$routes->get('api/comment/(.*)','Comments::show/$1');
-$routes->post('api/comment/(.*)','Comments::create/$1', ['filter' => 'auth']);
-$routes->delete('api/comment/(.*)','Comments::delete/$1', ['filter' => 'auth']);
-$routes->post('api/like/(.*)','Likes::create/$1', ['filter' => 'auth']);
-$routes->post('api/unlike/(.*)','Likes::delete/$1', ['filter' => 'auth']);
-$routes->get('api/like/(.*)','Likes::show/$1', ['filter' => 'auth']);
+$routes->get('api/view/(.*)', 'Content::view/$1');
+$routes->get('api/comment/(.*)', 'Comments::show/$1');
+$routes->post('api/comment/(.*)', 'Comments::create/$1', ['filter' => 'auth']);
+$routes->delete('api/comment/(.*)', 'Comments::delete/$1', ['filter' => 'auth']);
+$routes->post('api/like/(.*)', 'Likes::create/$1', ['filter' => 'auth']);
+$routes->post('api/unlike/(.*)', 'Likes::delete/$1', ['filter' => 'auth']);
+$routes->get('api/like/(.*)', 'Likes::show/$1', ['filter' => 'auth']);
 
-$routes->get('api/user/(.*)','User::show/$1', ['filter' => 'auth']);
+$routes->get('api/user/(.*)', 'User::show/$1', ['filter' => 'auth']);
 
-$routes->get('api/notif/(.*)','Notification::show/$1');
+$routes->get('api/notif/(.*)', 'Notification::show/$1');
 
-$routes->get('api/all','Content::index');
-$routes->post('api/image','ImageUploader::index');
+$routes->get('api/all', 'Content::index');
+$routes->post('api/image', 'ImageUploader::index');
 
 /*
  * --------------------------------------------------------------------
